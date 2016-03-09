@@ -26,38 +26,44 @@
 \newcommand\matop[2]{\boldsymbol{#1}\left({#2}\right)}
 
 \title{\LARGE \bf{}
-Unnecessary Complicated Research Title
+Contact Force Estimation for Robotic Arm using Motor Currents/Torques
 }
 
-
-\author{FirstName LastName%
-  \thanks{FirstName LastName is with the School of
-    Mechanical and Aerospace Engineering, NTU, Singapore.}  }
+\author{Raymond Djajalaksana, Francisco Suarez, and Quang-Cuong Pham}
 
 \begin{document}
 \maketitle
-\thispagestyle{empty}
-\pagestyle{empty}
+\pagestyle{plain}
+\thispagestyle{plain}
 
 % Content
 \begin{abstract}
-  Here goes the abstract...
+Here goes the abstract...
 \end{abstract}
 
 \section{Introduction}
 Introduction goes here.
 
+\section{Model Estimation}
+Model Estimation here
 
-\section{Setup}
-\label{sec:setup}
+\section{Experimental Setup}
+\subsection{Motor Current Readings}
 Setup description.
-
-\section{Examples}
+\subsection{Setup}
 
 \begin{itemize}
   \item Section reference: \sref{sec:setup} depicts the setup...
-  \item Bibliographic reference: The title of \cite{Bischoff2010} is The KUKA-DLR Lightweight Robot arm - a new reference platform for robotics research and manufacturing...
 \end{itemize}
+
+\section{Results}
+
+\subsection{Model Identification}
+Model Identification here
+
+\subsection{Validation}
+Validation here
+
 
 \subsection{Figures}
 \begin{figure}[!htb]
@@ -72,11 +78,6 @@ Appropriate values for the distance between the two robots ($d$ in \fref{fig:wor
   \centering
   \subfloat[$t=0$s.]{\includegraphics[height=20mm]{snapshot01}}\,
   \subfloat[$t=11$s.]{\includegraphics[height=20mm]{snapshot02}}\,
-  \subfloat[$t=24$s.]{\includegraphics[height=20mm]{snapshot03}}\,
-  \subfloat[$t=31$s.]{\includegraphics[height=20mm]{snapshot04}}\,
-  \subfloat[$t=43$s.]{\includegraphics[height=20mm]{snapshot05}}\,
-  \subfloat[$t=56$s.]{\includegraphics[height=20mm]{snapshot06}}\,
-  \subfloat[$t=70$s.]{\includegraphics[height=20mm]{snapshot07}}\,
   \subfloat[$t=82$s.]{\includegraphics[height=20mm]{snapshot08}}
   \caption{Snapshots of the bimanual pin insertion. a) The initial position. The positions of the table, stick and pin are determined using the motion capture system. b) The left arm performs the compliant grasping of the pin. c) The right arm grasps the stick. d) The right arm places the stick in a position where the insertion can take place. e) The left arm moves above the stick and detects the contact with the pin. f) Through force exploration, the left arm finds the first edge of the stick. g) The left arm finds the second edge of the stick. h) Using the refined position of the two edges, the system knows where the middle axis is and can find the hole and the left arm inserts the pin. The complete video can be found at \protect\url{http://goo.gl/cYl9sq}.}
   \label{fig:snapshots}
@@ -101,5 +102,4 @@ The coefficients $a_{j}^{k}$ and $b_{j}^{k}$ are the amplitudes of the sine and 
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,references}
-
 \end{document}

@@ -50,9 +50,7 @@ In regards to this, many researches have been done in order to estimate the cont
 
 This paper aims to estimate contact force based on motor currents and finally develop the algorithm to control the contact force of the robot. The model for the force estimation is still based on the basic dynamic equation. 
 
-
-
-
+%----------------------------------------------------------------------------------------------------
 
       \section{Model Estimation}
 The basic dynamic equation of robotic arm is described by:
@@ -80,9 +78,7 @@ And the second one is by using Dahl model which is a basic dynamic friction. Dah
 
 The result of friction identification is presented in the \ref{identification}.
 
-
-
-
+%----------------------------------------------------------------------------------------------------
 
       \section{Experimental Setup}
 The manipulator arm that was used is Denso VS060A3. Motor currents and torques were available from Denso and ATI Gamma F/T sensor was attached at the end-effector arm to get the contact force value.  
@@ -127,9 +123,7 @@ After the first two attempts, it was found out that we can actually extract moto
   \caption{Reading of motor currents}
 \end{figure}
 
-
-
-
+%----------------------------------------------------------------------------------------------------
 
       \section{Results}
 \subsection{Preliminary Results}
@@ -182,7 +176,7 @@ From \fref{fig:optimization}, it is quite clear that result will depend on the f
 \subsection{Validation}
 \label{validation}
 
-After identifying the paramaters for all the required equation, developed algortihm model now was built to estimate the contact force. Hence, there are two versions of algortithm, one that use Dahl and another one that use coulomb and viscous. The estimated force is then compared to real force from F/T sensor for validation. The results are shown in \fref{fig:validation} 
+After identifying the paramaters for all the required equation, developed algorithm model now was built to estimate the contact force. Hence, there are two versions of algortithm, one that use Dahl and another one that use coulomb and viscous. The estimated force is then compared to real force from F/T sensor for validation. The results are shown in \fref{fig:validation} 
 
 In \fref{fig:Dahl tor} it is quite clear that Dahl algorithm gives a good estimation for second and third joint. However, it is bad when estimating the first joint. This is more likely due to two reasons. First, the initial state of $z$ might be incorrect. For every arm position, it is supposed to have specific state of $z$, however as we lack of knowledge of this value, it was only calculated using some basic assumption. The second reason is due to stability of motor currents. Since change of internal state is a function of rate of motor currents, unstable motor currents will drift the value of $z$. However, seeing that the value of first joint seems drifted over time, hence it is more likely that the second reason is the main problem.
 
@@ -232,17 +226,12 @@ Hence, based on validation results both of friction model have their own advanta
   \label{fig:torque validation}
 \end{figure}
 
-
-
-
-
+%----------------------------------------------------------------------------------------------------
 
       \section{Future Works}
 Future works include testing the identification results and the developed algorithm for both friction in real time operation. After that, we can finally start to control the robot to perform assembly task (e.g.: pin insertion) with the tested results. Finally, we will compare the result of both model and choose the best one.
 
-
-
-
+%----------------------------------------------------------------------------------------------------
 
       \section{Conclusion}
 Identification parameters of Denso arm for contact force estimation with motor currents/torques have been done in this paper. One preliminary problem related to absolute motor currents have also been solved. Two friction models are considered for identification and optimization. The algorithm models are then developed using respective models. From there, the contact force was estimated back and compared with those from F/T sensor in offline mode. Based on the results, both friction models have their own advantages and limitations. Hence, both models are kept for further investigation and testing. 

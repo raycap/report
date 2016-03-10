@@ -1,35 +1,221 @@
 \documentclass[12pt,english]{beamer}
 \usetheme{Rochester}
+\graphicspath{{/home/raymond/report/Presentation_2/figures/}}
+\DeclareGraphicsExtensions{.pdf,.jpg,.jpeg,.png}
+
+
+\title{Contact Force Estimation for Robotic Assembly using Motor Currents/Torques}
+\author{Raymond Djajalaksana}
+\date{\today}
 
 \begin{document}
+  \frame{\titlepage}
+  
+  \section{Introduction}
+  \section{Model Estimation}
+  \section{Setup}
+  \section{Results}
+  \section{Future Works} 
   \begin{frame}
-    \frametitle{This is the first slide}
-    %Content goes here
+    \frametitle{Outline}
+    \tableofcontents
   \end{frame}
+  
   \begin{frame}
-    \frametitle{This is the second slide}
-    \framesubtitle{A bit more information about this}
-    %More content goes here
+    \frametitle{Introduction}
+    \begin{itemize}
+      \item To handle uncertainites and to adapt with dynamic environment, contact detection is essential for assembly arm. This requires the ability of the arm to estimate the contact force.
+      \item F/T sensor will be a good way to solve this problem, though it has some limitations.
+      \item Limitations of F/T sensor :
+      \begin{itemize}
+        \item expensive
+        \item Requires mechanical integration
+      \end{itemize}
+    \end{itemize}
   \end{frame}
   
   \begin{frame}
-
-   \begin{block}{This is a Block}
-      This is important information
-   \end{block}
-
-   \begin{alertblock}{This is an Alert block}
-   This is an important alert
-   \end{alertblock}
-
-   \begin{exampleblock}{This is an Example block}
-   This is an example 
-   \end{exampleblock}
-
-\end{frame}
+    \frametitle{Introduction}
+    \begin{itemize}
+      \item Alternative ways to estimate the contact forces have been researched in early decades.
+      \item Some approaches to estimate contact forces:
+      \begin{itemize}
+        \item detune the low-level joint position control loop
+        \item generalized momentum with Kalman filter
+        \item Bayesian approach
+      \end{itemize}
+      \item All approaches use the same robot dynamic equation.
+    \end{itemize}
+  \end{frame}
   
+%----------------------------------------------------------------------------------------
+  \begin{frame}
+    \frametitle{Model Estimation}
+    \begin{itemize}
+      \item Robot dynamic equations:
+      \begin{align}
+        \tau_{mot} &= \tau_{dyn} + \tau_{ext} + \tau_{friction}\\
+        \tau_{dyn} &= H\left(q\right)\ddot{q} + C\left(\dot{q} , q \right)\dot{q} + G\left(q \right)\\
+        \tau_{ext} &= J^{T} F_{ext}\\
+        \tau_{mot} &= K_{m} I_{mot}
+      \end{align}
+    \end{itemize}
+  \end{frame}
   
-% etc
+  \begin{frame}
+    \frametitle{Model Estimation}
+    \begin{itemize}
+      \item Simple static friction (viscous + coulomb) model:
+      \begin{equation}
+        \tau_{friction} = K_{c} sign\left(\dot{q}\right) + K_{v} \dot{q}
+      \end{equation}
+      \item Simple dynamic friction (Dahl) model:
+      \begin{align}
+        \dot{z} &= \dot{q} - \frac{\left|\dot{q}\right|}{F_{c}} \sigma z \\
+        \tau_{friction} &= \sigma z
+      \end{align}
+    \end{itemize}
+  \end{frame}
+  
+%----------------------------------------------------------------------------------------
+  \begin{frame}
+    \frametitle{Setup}
+    \framesubtitle{Experimental Setup}
+    Two types of experiments:
+    \begin{itemize}
+    \item First experiments (for joint 1,2,3, and 5) :
+      \begin{itemize}
+        \item home $\rightarrow$ pre-contact point $\rightarrow$ contact $\rightarrow$ sinusoidal motion
+      \end{itemize}
+    \item Second experiments (for joint 4 and 6) :
+      \begin{itemize}
+        \item home $\rightarrow$ stationary point $\rightarrow$ force is introduced to robot
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Setup}
+    \framesubtitle{Experimental Setup}
+    First type of experiment:
+    % Insert demo here
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Setup}
+    \framesubtitle{Experimental Setup}
+    Second type of experiment:
+    % Insert demo here
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Setup}
+    \framesubtitle{Motor Currents Reading}
+    \begin{itemize}
+      \item Problem : Denso arm only gives absolute value of the motor currents. Needs a way to know the sign of motor currents.
+      \begin{figure}
+        \includegraphics[scale=0.4]{fig04}
+      \end{figure}
+    \end{itemize}
+  \end{frame}  
+  
+  \begin{frame}
+    \frametitle{Setup}
+    \framesubtitle{Motor Currents Reading}
+    \begin{itemize}
+      \item Some approaches to fix this problem:
+      \begin{itemize}
+        \item Use sign of $\tau_{dyn}$ to determine motor current sign.
+        \item Use sign of $\Delta \tau_{dyn}$ value to determine motor current sign.
+        \item Use sign of motor torques to give motor current sign.
+      \end{itemize}
+    \end{itemize}
+  \end{frame}  
+  
+  \begin{frame}
+    \frametitle{Setup}
+    \framesubtitle{Motor Currents Reading}
+    \begin{itemize}
+      \item After implementing the third method.
+      \begin{figure}
+        \includegraphics[scale=0.4]{fig05}
+      \end{figure}
+    \end{itemize}
+  \end{frame}  
+
+%----------------------------------------------------------------------------------------  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Preliminary Results}
+    % Continue
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Model Identification}
+    % Continue
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Validation}
+    Contact force estimation
+    \begin{columns}
+      \column{0.5\textwidth}
+      \centering
+        \begin{figure}
+          \includegraphics[width = \textwidth]{fig14}
+        \end{figure}
+        Static friction model
+      \column{0.5\textwidth}
+      \centering
+        \begin{figure}
+          \includegraphics[width = \textwidth]{fig15}
+        \end{figure}
+        Dynamic friction model
+    \end{columns}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Validation}
+    External joint torque estimation
+    \begin{columns}
+      \column{0.5\textwidth}
+      \centering
+        \begin{figure}
+          \includegraphics[width = \textwidth]{fig16}
+        \end{figure}
+        Static friction model
+      \column{0.5\textwidth}
+      \centering
+        \begin{figure}
+          \includegraphics[width = \textwidth]{fig17}
+        \end{figure}
+        Dynamic friction model
+    \end{columns}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Validation}
+    \begin{columns}
+      \column{0.5\textwidth}
+        Static friction model
+        % Continue
+      \column{0.5\textwidth}
+        Dynamic friction model
+        % Continue
+    \end{columns}
+  \end{frame}
+%----------------------------------------------------------------------------------------
+  \begin{frame}
+    \frametitle{Future Works}
+    \begin{itemize}
+      \item Test the results in real time operation.
+      \item Start controlling the robot for assembly task.
+    \end{itemize}
+  \end{frame}
 \end{document}
 
 

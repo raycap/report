@@ -119,10 +119,10 @@ After the first two attempts, it was found out that we can actually extract moto
 \begin{figure}
   \centering
   \subfloat[Raw motor currents]{
-    \includegraphics[width = 0.4\textwidth ]{fig04} 
+    \includegraphics[width = 0.45\textwidth ]{fig04} 
     \label{fig:raw current}}\,
   \subfloat[Motor currents using sign of motor torques]{
-    \includegraphics[width = 0.4\textwidth ]{fig05}
+    \includegraphics[width = 0.45\textwidth ]{fig05}
     \label{fig:mod current}}\,
   \caption{Reading of motor currents}
 \end{figure}
@@ -137,38 +137,45 @@ The result of experiments can be seen in \fref{fig:prelim result}. The reference
 
 \begin{figure*}[t]
   \centering
-  \subfloat[First Joint]{\includegraphics[width = 0.3\textwidth ]{placeholder}} \,
-  \subfloat[Second Joint]{\includegraphics[width = 0.3\textwidth ]{placeholder}} \,
-  \subfloat[Thrid Joint]{\includegraphics[width = 0.3\textwidth ]{placeholder}} \,
-  \subfloat[Fourth Joint]{\includegraphics[width = 0.3\textwidth ]{placeholder}} \,
-  \subfloat[Fifth Joint]{\includegraphics[width = 0.3\textwidth ]{placeholder}} \,
-  \subfloat[Sixth Joint]{\includegraphics[width = 0.3\textwidth ]{placeholder}} \,
-  \caption{ external torques vs motor currents}
+  \subfloat[First Joint]{\includegraphics[width = 0.3\textwidth ]{fig06}} \,
+  \subfloat[Second Joint]{\includegraphics[width = 0.3\textwidth ]{fig07}} \,
+  \subfloat[Thrid Joint]{\includegraphics[width = 0.3\textwidth ]{fig08}} \,
+  \subfloat[Fourth Joint]{\includegraphics[width = 0.3\textwidth ]{fig09}} \,
+  \subfloat[Fifth Joint]{\includegraphics[width = 0.3\textwidth ]{fig10}} \,
+  \subfloat[Sixth Joint]{\includegraphics[width = 0.3\textwidth ]{fig11}} \,
+  \caption{ External torques vs motor currents}
   \label{fig:prelim result}
 \end{figure*}
 
 \subsection{Model Identification}
 \label{identification}
 
-Firstly, the value for identification is referenced with pre-contact condition. It is clear that the graph is greatly affected by friction and from computation it is known that there is only a few changes in $\tau_{dyn}$ during contact motion and so it can be ommitted. Thus, the dynamic equation can be simplified into just:
+Firstly, the value for identification is referenced with pre-contact condition. From computation it is known that there is only a few changes in $\tau_{dyn}$ during contact motion and so it can be ommitted. Thus, the dynamic equation can be simplified into just:
 
 \begin{equation}
   J^{T} \Delta F_{ext} = K_{m} sign\left(\tau_{mot}\right) \Delta I_{mot} - \Delta \tau_{friction} + C
 \end{equation}
  
-Here we introduces a constant to adjust for any offset thay may happen. To identify all the unknown parameters, the equation is optimized to match with the fitted data. The number of parameters to be optimized will depend on the model of friction that we choose. This optimization is done by using nelder-mead method. One of the result of optimization is shown in \fref{fig:optimization}. It shows the result for both friction model that is going to be used. 
+Here we introduces a constant to adjust for any offset thay may happen. As for friction, we will identify it using static friction and Dahl friction. As for Dahl friction, some adjustments to the equation need to be done to match with the optimization. The modified Dahl equation that is going to be used is : 
 
-From \fref{fig:optimization}, it is quite clear that result will depend on the friction model. Using Dahl model, the error value to the fitted data is less than using coulomb + viscous friction. However, Dahl model imposes one major problem. Dahl model requires initial state of $z$. During optimization, this value is unknown and thus it was optimized together with other parameters. However, this initial state will always change for every different position of the arm. This makes the model to be difficult to be implemented since in the end the initial state of $z$ is still unknown to us. Hence, while Dahl model is good for identification, it is difficult to be applied in the application. This will be more clear in the next subsection (\ref{validation}).
+\begin{align}
+  \dot{z} &= p_{2 }\dot{\tau_{mot}} - \left|\dot{\tau_{mot}}\right| p_{3} z \\
+  \tau_{friction} &= p_{1} z
+\end{align}
+
+To identify all the unknown parameters, the equation is optimized to match with the fitted data. The number of parameters to be optimized will depend on the model of friction that we choose. This optimization is done by using nelder-mead method. One of the result of optimization is shown in \fref{fig:optimization}. It shows the result for both friction model that is going to be used. 
+
+From \fref{fig:optimization}, it is quite clear that result will depend on the friction model that we choose. Using Dahl model, the error value to the fitted data is less than using coulomb + viscous friction. However, Dahl model imposes one problem. The model requires initial state of $z$. During optimization, this value is unknown and hence it was optimized together with other parameters. However, this initial state will always change for every different position of the arm. Thus, it makes the model more difficult to implement since we need to know the initial state. This will be more clear in the next subsection (\ref{validation}).
 
 \begin{figure}
   \centering
   \subfloat[Using viscous and coulomb model]{
-    \includegraphics[width = 0.4\textwidth ]{placeholder} 
+    \includegraphics[width = 0.45\textwidth ]{fig12} 
     \label{fig:raw currents}}\,
   \subfloat[Using Dahl model]{
-    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \includegraphics[width = 0.45\textwidth ]{fig13}
     \label{fig:mod currenta}}\,
-  \caption{Optimization parameters for second joint using different friction model}
+  \caption{Example of optimization result of one joint (e.g.:second joint)}
   \label{fig:optimization}
 \end{figure}
 
@@ -177,46 +184,51 @@ From \fref{fig:optimization}, it is quite clear that result will depend on the f
 
 After identifying the paramaters for all the required equation, developed algortihm model now was built to estimate the contact force. Hence, there are two versions of algortithm, one that use Dahl and another one that use coulomb and viscous. The estimated force is then compared to real force from F/T sensor for validation. The results are shown in \fref{fig:validation} 
 
-In \fref{fig:Dahl Validation} it is very clear that Dahl algorithm failed to estimate the contact force. This is more likely due to two reasons. First, the initial state of $z$ is incorrect. For every arm position, it supposes to have specific state of $z$, however as we lack of knowledge of this value, it was assumed that it is the same with the value from identification. The second reason is due to stability of motor currents. Since change of internal state is a function of rate of motor currents, unstable motor currents might drift the value of $z$. However, the first reason is more likely to be the source of the problem.
+In \fref{fig:Dahl tor} it is quite clear that Dahl algorithm gives a good estimation for second and third joint. However, it is bad when estimating the first joint. This is more likely due to two reasons. First, the initial state of $z$ might be incorrect. For every arm position, it is supposed to have specific state of $z$, however as we lack of knowledge of this value, it was only calculated using some basic assumption. The second reason is due to stability of motor currents. Since change of internal state is a function of rate of motor currents, unstable motor currents will drift the value of $z$. However, seeing that the value of first joint seems drifted over time, hence it is more likely that the second reason is the main problem.
 
-On the other hand, the results using coulomb and viscous can be seen in \fref{fig:static validation}. The estimated force in x-axis is quite satisfactory. Moreover, this is the main force that acting on the robot. However, the force estimation of other axis is not as good as the first one. This is because of the error estimation of external torque that leads to the force. The comparison of external torque estimation can be seen in \fref{fig:torque validation}. The root mean square error values of estimated contact force and torque using this model are presented in \tref{table:rmse}.
+On the other hand, the results using coulomb and viscous can be seen in \fref{fig:static validation} and \fref{fig:static tor}. The estimated force in x-axis is quite satisfactory and this is the main force that acting on the robot. However, the force estimation of other axis is not as good as the first one. This is because of the error estimation of external joint torques that leads to the force. The comparison of external joint torques estimation can be seen in \fref{fig:torque validation}. The root mean square error values of estimated contact force and torque using this model are presented in \tref{table:rmse}.
 
 \begin{table}
     \centering
     \begin{tabular}{| c | c | c | c |}
     \hline
               & RMSE & max-min & RMSE / (max-min)(\%) \\ \hline
-    Force x   &   & &   \\ \hline
-    Force y   &   & &   \\ \hline
-    Force z   &   & &   \\ \hline
-    Torque x  &   & &   \\ \hline
-    Torque y  &   & &   \\ \hline
-    Torque z  &   & &   \\ \hline
+    Force x   & 5.231976  & 107.774842  & 4.854543  \\ \hline
+    Force y   & 0.942644  & 2.391211    & 39.421205  \\ \hline
+    Force z   & 18.686503 & 32.631091   & 57.265945  \\ \hline
+    Torque x  & 0.116993  & 0.048434    & 241.550320  \\ \hline
+    Torque y  & 3.542738  & 0.879940    & 402.611434  \\ \hline
+    Torque z  & 0.350672  & 0.192694    & 181.983440  \\ \hline
     \end{tabular}
     \caption{Root mean square value of estimated contact force using static friction}
     \label{table:rmse}
 \end{table}
 
-Another point to be considered is that since the algorithm model for static friction has some discrete characterics, the estimated force will show some discrete pattern too. The discrete pattern in static friction comes from stiction phase during the change of sign in joint velocity. This discontinuity might be undesired in certain cases since it does not really depict the profile of continuous force.
+One point to be considered is that since the algorithm model for static friction has some discrete characterics, it will have two effects on the estimation. First, the estimated contact force will have discrete pattern, which might be undesirable if certain cases need continuous profile. Second, The value will not change unless it overcomes the threshold of discrete value. This might be bad if the changes in the input (motor currents in this case) is small, since it will not counted as a change. However, these two effects do not happen in Dahl model since it is a continuous equation.  
 
-Hence, based on the validation of each model, using static friction has a better estimation compared to dynamic friction. While the static one has some discrete pattern that might be undesired, it is more practical to use rather than Dahl model.
+Hence, based on validation results both of friction model have their own advantages and disadvantages. For this reason, both models will be kept for further testing of controlling the robot. 
 
 \begin{figure}
   \centering
   \subfloat[Validation using viscous and coulomb friction]{
-    \includegraphics[width = 0.4\textwidth ]{placeholder} 
+    \includegraphics[width = 0.35\textwidth ]{fig14} 
     \label{fig:static validation}}\,
   \subfloat[Validation using Dahl model]{
-    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \includegraphics[width = 0.35\textwidth ]{fig15}
     \label{fig:Dahl Validation}}\,
-  \caption{Validation result of estimated force}
+  \caption{Validation result of estimated force. (- - : estimated output, -- : real output)}
   \label{fig:validation}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width = 0.35\textwidth ]{placeholder}
-  \caption{External torques}
+  \subfloat[Using static model]{
+    \includegraphics[width = 0.35\textwidth ]{fig16} 
+    \label{fig:static tor}}\,
+  \subfloat[Using Dahl model]{
+    \includegraphics[width = 0.35\textwidth ]{fig17}
+    \label{fig:Dahl tor}}\,
+  \caption{External joint torques estimation of \fref{fig:static validation} (- - : estimated output, -- : real output)}
   \label{fig:torque validation}
 \end{figure}
 
@@ -226,14 +238,14 @@ Hence, based on the validation of each model, using static friction has a better
 
 
       \section{Future Works}
-Future works include testing the identification results and the developed algorithm in real time operation. After that, we can finally start to control the robot to perform assembly task (e.g.: pin insertion) with the tested results.
+Future works include testing the identification results and the developed algorithm for both friction in real time operation. After that, we can finally start to control the robot to perform assembly task (e.g.: pin insertion) with the tested results. Finally, we will compare the result of both model and choose the best one.
 
 
 
 
 
       \section{Conclusion}
-Identification parameters of Denso arm for contact force estimation with motor currents/torques have been done in this paper. One preliminary problem relating to absolute motor currents have also been solved. Some models are used for identification and optimization. While Dahl friction model has a better result for modeling the contact force, it is not practical in use. Hence, coulomb and viscous friction model is chosen for reasonable and ease of use. The algorithm model is then developed using respective model. From there, the contact force was estimated back and compared with those from F/T sensor in offline mode. The result is good for approximation level. 
+Identification parameters of Denso arm for contact force estimation with motor currents/torques have been done in this paper. One preliminary problem related to absolute motor currents have also been solved. Two friction models are considered for identification and optimization. The algorithm models are then developed using respective models. From there, the contact force was estimated back and compared with those from F/T sensor in offline mode. Based on the results, both friction models have their own advantages and limitations. Hence, both models are kept for further investigation and testing. 
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,references}

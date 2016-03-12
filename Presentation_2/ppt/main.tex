@@ -5,22 +5,18 @@
 
 
 \title{Contact Force Estimation for Robotic Assembly using Motor Currents/Torques}
-\author{Raymond Djajalaksana}
+\author{Raymond Djajalaksana, Fransisco Suarez, Quang-Cuong Pham}
 \date{\today}
 
 \begin{document}
   \frame{\titlepage}
   
-  \section{Introduction}
-  \section{Model Estimation}
-  \section{Setup}
-  \section{Results}
-  \section{Future Works} 
   \begin{frame}
     \frametitle{Outline}
     \tableofcontents
   \end{frame}
-  
+    
+  \section{Introduction}  
   \begin{frame}
     \frametitle{Introduction}
     \begin{itemize}
@@ -44,11 +40,12 @@
         \item generalized momentum with Kalman filter
         \item Bayesian approach
       \end{itemize}
-      \item All approaches use the same robot dynamic equation.
+      \item All approaches are rooted from robot dynamic equation.
     \end{itemize}
   \end{frame}
   
 %----------------------------------------------------------------------------------------
+  \section{Model Estimation}
   \begin{frame}
     \frametitle{Model Estimation}
     \begin{itemize}
@@ -77,7 +74,18 @@
     \end{itemize}
   \end{frame}
   
+  \begin{frame}
+    \frametitle{Model Estimation}
+    \begin{itemize}
+      \item Dahl friction diagram:
+      \begin{figure}
+        \includegraphics[width = 0.8\textwidth]{Dahl} \,
+      \end{figure}
+    \end{itemize}
+  \end{frame}
+  
 %----------------------------------------------------------------------------------------
+  \section{Setup}
   \begin{frame}
     \frametitle{Setup}
     \framesubtitle{Experimental Setup}
@@ -98,14 +106,19 @@
     \frametitle{Setup}
     \framesubtitle{Experimental Setup}
     First type of experiment:
-    % Insert demo here
+    \begin{center}
+      \href{run:exp_1.ogv}{\includegraphics[width = 0.4\textwidth]{fig01}}
+      \href{run:exp_2.ogv}{\includegraphics[width = 0.4\textwidth]{fig18}}
+    \end{center}
   \end{frame}
   
   \begin{frame}
     \frametitle{Setup}
     \framesubtitle{Experimental Setup}
     Second type of experiment:
-    % Insert demo here
+    \begin{center}
+      \href{run:exp_3.ogv}{\includegraphics[width = 0.6\textwidth]{fig03}}
+    \end{center}
   \end{frame}
   
   \begin{frame}
@@ -114,7 +127,7 @@
     \begin{itemize}
       \item Problem : Denso arm only gives absolute value of the motor currents. Needs a way to know the sign of motor currents.
       \begin{figure}
-        \includegraphics[scale=0.4]{fig04}
+        \includegraphics[scale=0.35]{fig04}
       \end{figure}
     \end{itemize}
   \end{frame}  
@@ -144,30 +157,95 @@
   \end{frame}  
 
 %----------------------------------------------------------------------------------------  
+  \section{Results}
   \begin{frame}
     \frametitle{Results}
     \framesubtitle{Preliminary Results}
-    % Continue
+    \begin{itemize}
+      \item First type of experiment :
+      \begin{columns}
+        \column{0.5\textwidth}
+        \begin{figure}
+          \includegraphics[height = 0.5\textwidth]{fig06} \,
+          \includegraphics[height = 0.5\textwidth]{fig08} \,
+        \end{figure}
+        \column{0.5\textwidth}
+        \begin{figure}
+          \includegraphics[height = 0.5\textwidth]{fig07} \,
+          \includegraphics[height = 0.5\textwidth]{fig10} \,
+        \end{figure}
+      \end{columns}
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Preliminary Results}
+    \begin{itemize}
+      \item Second type of experiment :
+      \begin{columns}
+        \column{0.6\textwidth}
+        \begin{figure}
+          \includegraphics[width = \textwidth]{fig09} \,
+        \end{figure}
+        \column{0.6\textwidth}
+        \begin{figure}
+          \includegraphics[width = \textwidth]{fig11} \,
+        \end{figure}
+      \end{columns}
+    \end{itemize}
   \end{frame}
   
   \begin{frame}
     \frametitle{Results}
     \framesubtitle{Model Identification}
-    % Continue
+    \begin{itemize}
+    \item Modified equation to be identified :
+    \begin{equation}
+      J^{T} \Delta F_{ext} = K_{m} sign\left(\tau_{mot}\right) \Delta I_{mot} - \Delta \tau_{friction} + C
+    \end{equation}
+    \item Identification is done by optimizing the model parameters so it will match into the data. The optimization is done using Nelder-mead method.
+    \end{itemize}
   \end{frame}
+  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Model Identification}
+    \begin{itemize}
+    \item Static friction model will be used as it is.
+    \item Modification of Dahl model for optimization :
+    \begin{align}
+      \dot{z} &= p_{2 }\dot{\tau_{mot}} - \left|\dot{\tau_{mot}}\right| p_{3} z \\
+      \tau_{friction} &= p_{1} z
+    \end{align}
+    \item Optimization: 4 parameters for static friction. 6 parameters for dynamic friction.
+    \end{itemize}
+  \end{frame}
+  
+  
+  \begin{frame}
+    \frametitle{Results}
+    \framesubtitle{Model Identification}
+    Results of optimization:
+    \begin{center}
+      \includegraphics[width = 0.55\textwidth]{fig12}
+      \includegraphics[width = 0.55\textwidth]{fig13}
+    \end{center}
+  \end{frame}
+  
   
   \begin{frame}
     \frametitle{Results}
     \framesubtitle{Validation}
     Contact force estimation
     \begin{columns}
-      \column{0.5\textwidth}
+      \column{0.6\textwidth}
       \centering
         \begin{figure}
           \includegraphics[width = \textwidth]{fig14}
         \end{figure}
         Static friction model
-      \column{0.5\textwidth}
+      \column{0.6\textwidth}
       \centering
         \begin{figure}
           \includegraphics[width = \textwidth]{fig15}
@@ -181,13 +259,13 @@
     \framesubtitle{Validation}
     External joint torque estimation
     \begin{columns}
-      \column{0.5\textwidth}
+      \column{0.6\textwidth}
       \centering
         \begin{figure}
           \includegraphics[width = \textwidth]{fig16}
         \end{figure}
         Static friction model
-      \column{0.5\textwidth}
+      \column{0.6\textwidth}
       \centering
         \begin{figure}
           \includegraphics[width = \textwidth]{fig17}
@@ -202,13 +280,22 @@
     \begin{columns}
       \column{0.5\textwidth}
         Static friction model
-        % Continue
+        \begin{itemize}
+          \item quantitatively less accurate for second and thrid joint torque estimation.
+          \item discrete pattern.
+        \end{itemize}
       \column{0.5\textwidth}
         Dynamic friction model
-        % Continue
+        \begin{itemize}
+          \item quantitatively more accurate for second and thrid joint torque estimation.
+          \item continuous profile.
+          \item results are drifted.
+          \item difficulty to estimate first initial internal state.
+        \end{itemize}
     \end{columns}
   \end{frame}
 %----------------------------------------------------------------------------------------
+  \section{Future Works} 
   \begin{frame}
     \frametitle{Future Works}
     \begin{itemize}

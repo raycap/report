@@ -1,0 +1,37 @@
+\chapter{Methodology}
+\section{Motor Currents Reading}
+
+
+Before continue with more experiment and identification, there is one problem that needs to be solved first. The problem is that the arm only gives absolute value of the motor currents (\fref{fig:raw current}). Thus there is a need to identify the sign of the motor currents of each joints. Three methods were tried but only one was successful.
+
+The first attempt was to give the motor current sign based on the sign of $\tau_{dyn}$ during non-contact condition. However, this poses a problem when the $\tau_{dyn}$ goes near zero as it will not be clear enough to identify the sign. The second method was to match the derivative of motor currents with derivative $\tau_{dyn}$ during pre-contact motion (e.g.: if $\tau_{dyn}$ is increasing, the motor currents has to be increasing too, and vice versa). Unfortunately, this principle working only if motor currents are very smooth and steady which is a very difficult condition.
+
+After the first two attempts, it was found out that we can actually extract motor torques value from Denso and this time it includes the sign of it. The data is then plotted against motor currents with the sign of motor torques to see the relation. From \fref{fig:current vs torque} we can see that there is a good linearity between these two variables, and so we can now actually use motor torques instead of motor currents. By doing this, not only we do not need to take care of the currents sign problem anymore, we also simplify our problem since what we are interested in is the motor torques, not motor currents. However, since the value is not in the SI unit calibration is needed to adjust the value into the SI unit. 
+
+\begin{figure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \includegraphics[width = \textwidth ]{placeholder} 
+    \caption{Raw data of motor currents}
+    \label{fig:raw current}}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}{
+    \includegraphics[width = \textwidth ]{placeholder}
+    \caption{Raw data of motor torques}
+    \label{fig:raw torque}}
+  \end{subfigure}
+  \caption{Reading of motor currents}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{Motor torques vs motor currents with sign}
+    \label{fig:current vs torque}
+\end{figure}
+
+\section{High Torque Collection Data}
+
+
+\section{High Velocity Collection Data}
+
+

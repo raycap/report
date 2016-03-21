@@ -5,7 +5,7 @@
 
 
 \title{Contact Force Estimation for Robotic Assembly using Motor Currents/Torques}
-\author{Raymond Djajalaksana, Fransisco Suarez, Quang-Cuong Pham}
+\author{Raymond Djajalaksana, Francisco Suarez, Quang-Cuong Pham}
 \date{\today}
 
 \begin{document}
@@ -43,6 +43,12 @@
       \item All approaches are rooted from robot dynamic equation.
     \end{itemize}
   \end{frame}
+%----------------------------------------------------------------------------------------
+  \section{Objective}
+  \begin{frame}
+    \frametitle{Objective}
+    Objective: Identify and develop the model for estimating the contact forces by using motor currents
+  \end{frame}
   
 %----------------------------------------------------------------------------------------
   \section{Model Estimation}
@@ -71,6 +77,16 @@
         \dot{z} &= \dot{q} - \frac{\left|\dot{q}\right|}{F_{c}} \sigma z \\
         \tau_{friction} &= \sigma z
       \end{align}
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Model Estimation}
+    \begin{itemize}
+      \item Static friction diagram:
+      \begin{figure}
+        \includegraphics[width = 0.5\textwidth]{Static} \,
+      \end{figure}
     \end{itemize}
   \end{frame}
   

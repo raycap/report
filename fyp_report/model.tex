@@ -1,32 +1,81 @@
 \chapter{Mathematical Model}
-\section{Background}
-\section{Purpose and scope }
+\section{Arm Dynamic Equation}
+\label{model}
+The basic dynamic equation of a six degrees of freedom (6-DOF) robotic arm is described by:
+
+\begin{equation}
+  \Sigma \tau_{joint} = \tau_{mot} + \tau_{ext}  = M\left(q\right)\ddot{q} + C\left(\dot{q} , q \right)\dot{q} + G\left(q \right) + \tau_{friction}\\
+\end{equation}
+
+Where $\tau_{mot}$ is the motor torque, $\tau_{ext}$ is the external wrench / torque applied to the respective joint where in this project is due to end-effector force / torque, and $\tau_{friction}$ is the torque because of joint friction. $M\left(q\right)$ defines the inertia matrix, $
+C\left(\dot{q} , q \right)$ defines the coriolis matrix, and $G\left(q \right)$ is the joint torque resulting from gravity. In other words, for each of joint, the summation of external joint torques ($\tau_{mot} + \tau_{ext}$) are equal to the torques needed to overcome the friction and to perform the dynamic motion. Initially the motor torque will be calculated from motor currents by using the relation:
+
+\begin{equation}
+  \tau_{mot} &= K_{m} I_{mot}
+\end{equation}
+
+However, there is a problem regarding motor currents where the solution is to get the motor torque value directly from the arm (see chapter \ref{motor currents}). And since the unit is in percentage (\%) and not in SI unit, calibration is needed to change it to SI. Thus, it can be written as:
+
+\begin{equation}
+  \tau_{mot} &= K_{denso} \tau_{denso}
+\end{equation}
 
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{| l c r |}
-    \hline
-    1 & 2 & 3 \\
-    4 & 5 & 6 \\
-    7 & 8 & 9 \\
-    \hline
-    \end{tabular}
-  \end{center}
-  \caption{A simple table}
-\end{table}
+On the other hand, transformation of the end-effector force/torque to the joint wrench, the jacobian matrix is needed, which the equation is:
 
-\begin{figure}[h!]  
-  \centering
-    \includegraphics[width=0.5\textwidth]{ntu_logo.png}
-  \caption{NTU logo}
+\begin{equation}
+  \tau_{ext} &= J^{T} F_{ext}
+\end{equation}
+
+Where $J^{T} \in \mathbb{R}^{6 \times 6}$ is the transpose of jacobian matrix and $F_{ext} = \left[F \;   \tau\right] \in \mathbb{R}^{6 \times 1}$ is the contact force. It is also important to consider friction since it can cause large error in manipulators \cite{aaaaa}. However, the modeling of friction is not easy as there are a lot of phenomenas in the friction itself. Thus, it is good to choose the simplest model that can have a reasonable result. The next section below will explain the friction model in more detail.
+
+\section{Friction Model}
+In general, friction models can be divided into two categories: static and dynamic friction. A model that depends only on current velocity is called static friction, whereas the friction related to non-stationary velocities is called dynamic model. 
+
+In static friction, including coulomb and viscous friction, stiction phase and stribeck effect can be also captured. However, dynamic friction can capture more phenomenas such as: small displacements occurring during stiction phase, hysteretic effect, and variations in break-away force. In short, dynamic model explains the friction in microscopic level and hence can capture more phenomenas. 
+
+During the early stage of the project, both type of model will be considered, whereby in the late stage only the static model will be used as dynamic model has some difficulties.
+
+\subsection{Static Friction Model}
+Viscous and Coulomb is the simplest form of static friction model. The basic mathematical form is as below:
+
+\begin{equation}
+  F = F_{c} sign\left(\dot{x}\right) + \beta \dot{x}
+\end{equation}
+
+Where $F$ is the friction force, $\nu$ is relative velocity to contact surfaces, $\beta$ is the viscous friction coefficient, and $F_{c}$ is coulomb friction. The model however does not include the stiction effect. The stiction effect can be easily added into the model, that is: a movement can be created only when the applied external force is greater than friction force Fs \cite{Bona05}. By adding this effect and adjusting the equation for robotic arm, the equation will be:
+
+\begin{equation}
+  \tau_{friction} = K_{c} sign\left(\dot{q}\right) + K_{v} \dot{q}
+\end{equation}
+
+Because of stiction and coulomb effect, the friction model will introduce discontinuous profile when the direction of velocity changes. The friction force diagram for this model can be seen in figure below where it shows a discontinuity at velocity equals to zero.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{Static friction profile}
+    \label{fig:static fric}
 \end{figure}
 
 
-First eref \cite{Hao14} asdfsdf \\
+\subsection{Dynamic Friction Model}
+The well-known Dahl model is the simplest form to describe the dynamic friction behaviour. With Dahl model, hysteretic effects can be explained since it introduces the lag in the changes of friction force as velocity changes. However, Dahl model does not include some other effects, such as stiction and Stribeck effect. A refined form of Dahl model that includes these effects is called LuGre friction model \cite{Bona05}.
 
-Second \cite{Beyl11} asfdasdf \\
+Dahl friction plays with an internal state variable $z$, and then defines the friction force as:
 
-Third \cite{Bona05} asfdsf\\
+\begin{align}
+  \dot{z} &= \dot{q} - \frac{\left|\dot{q}\right|}{F_{c}} \sigma z \\
+  \tau_{friction} &= \sigma z
+\end{align}
 
-fourth \cite{Ohi91} \\
+Where $\sigma$ is the bristle stiffness parameter. Because of this internal state $z$, Dahl model can explain the hysteretic effect in friction. Be aware that for this equation, it requires a correct initial value of $z$. Figure below shows the diagram of Dahl model.  
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{Dahl model of dynamic friction}
+    \label{fig:Dahl fric}
+\end{figure}
+
+Unlike Coulomb and viscous friction model, Dahl model does not have discontinuous profile in the equation. This becomes one advantage Dahl model has over the static friction. However, since the model is more complex, it imposes some difficulties such as: estimation of initial state is not easy, it is sensitive to the parameter ($\sigma$), and the necessity of high precision data. 

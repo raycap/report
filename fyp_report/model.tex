@@ -4,6 +4,7 @@
 The basic dynamic equation of a six degrees of freedom (6-DOF) robotic arm is described by:
 
 \begin{equation}
+\label{dynamic eq}
   \Sigma \tau_{joint} = \tau_{mot} + \tau_{ext}  = M\left(q\right)\ddot{q} + C\left(\dot{q} , q \right)\dot{q} + G\left(q \right) + \tau_{friction}\\
 \end{equation}
 
@@ -17,13 +18,16 @@ C\left(\dot{q} , q \right)$ defines the coriolis matrix, and $G\left(q \right)$ 
 However, there is a problem regarding motor currents where the solution is to get the motor torque value directly from the arm (see chapter \ref{motor currents}). And since the unit is in percentage (\%) and not in SI unit, calibration is needed to change it to SI. Thus, it can be written as:
 
 \begin{equation}
+\label{denso eq}
   \tau_{mot} &= K_{denso} \tau_{denso}
 \end{equation}
 
+Where $K_{denso}$ will be called denso gain for ease of reference.
 
 On the other hand, transformation of the end-effector force/torque to the joint wrench, the jacobian matrix is needed, which the equation is:
 
 \begin{equation}
+\label{tor wrench eq}
   \tau_{ext} &= J^{T} F_{ext}
 \end{equation}
 

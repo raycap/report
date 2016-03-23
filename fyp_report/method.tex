@@ -10,14 +10,16 @@ After the first two attempts, it was found out that we can actually extract moto
 
 \begin{figure}[h]
   \begin{subfigure}[t]{0.5\textwidth}
+    \centering
     \includegraphics[width = \textwidth ]{placeholder} 
     \caption{Raw data of motor currents}
-    \label{fig:raw current}}
+    \label{fig:raw current}
   \end{subfigure}
-  \begin{subfigure}[t]{0.5\textwidth}{
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
     \includegraphics[width = \textwidth ]{placeholder}
     \caption{Raw data of motor torques}
-    \label{fig:raw torque}}
+    \label{fig:raw torque}
   \end{subfigure}
   \caption{Reading of motor currents}
 \end{figure}
@@ -31,10 +33,11 @@ After the first two attempts, it was found out that we can actually extract moto
 
 
 \section{Two-Stage Experiment}
-There are two stage of experiments which are required to identify the two important parameters : $K_{denso}$ and $\tau_{friction}$ (see chapter \ref{model}). The purpose of setting different type of experiment is to eliminate the effect of other parameter, thus the resulted data is affected only because of one parameter. That way the identification of each parameter tends to be easier and more accurate. The first stage of experiment is the high torque collection data to calibrate the motor torque ($K_{denso}$) while the second stage of experiment is the high velocity collection data which is performed to identify the $\tau_{friciton}$ characteristics. 
+There are two stage of experiments which are required to identify the two important parameters : $K_{denso}$ and $\tau_{friction}$ (see chapter \ref{model}). The purpose of setting different type of experiment is to eliminate the effect of other parameter, thus the resulted data is affected only because of one parameter. That way the identification of each parameter tends to be easier and more accurate. The first stage of experiment is the high torque collection data to calibrate the motor torque ($K_{denso}$) while the second stage of experiment is the high velocity collection data which is performed to identify the $\tau_{friciton}$ characteristics. The data is captured in broad range of value to capture as many phenomena as possible.
 
 
 \subsection{High Torque Collection Data}
+\label{push exp}
 
 The experiment is meant to collect the torque measurement from wide range to calibrate the motor torque. Firstly, the robot is moved to a position where the interested joint will receive a high torque from contact force. While the robot is fixed, the force is introduced at the end-effector of the arm such that the interested joint will experience a high torque. Motor torques are recorded from Denso arm and contact force/torque are recorded through ATI F/T sensor. The experiment is repeated in a different position for each joints. See figure below for illustration.
 
@@ -46,7 +49,7 @@ The experiment is meant to collect the torque measurement from wide range to cal
 
 
 \subsection{High Velocity Collection Data}
-
+\label{fric exp}
 
 For this second experiment, the robot is moving in a free motion. Thus, a free rotation with different velocity is performed for each of respective joints. In this way, the effect of friction can be clearly caprtured. Motor torques, and joint positions which are crucial parameters are recorded from Denso manipulator for further analysis. See figure below for illustration.
 \begin{figure}[h]

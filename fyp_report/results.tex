@@ -1,32 +1,99 @@
 \chapter{Results and Model Identification}
-\section{Background}
-\section{Purpose and scope }
+\section{Preliminary Results}
+Two figures below are some samples of the collected data during the experiment. The whole data are available in the $APPENDIX$. The data has been filtered to eliminate the noise reading available from the sensor or motor. It uses low pass filter for smoothing the result. Low pass filter for F/T sensor have the order of 3 with cutoff frequency of 2 Hz. As for the motor torque, the low pass filter is set to have the order of 5 and cutoff frequency of 1 Hz.
 
+\fref{fig: push result} represents the result of high torque experiment for one of the joint and \fref{fig: fric result} represents the data collected during the free motion experiment. The results from \fref{fig: push result} will be further processed for calibrating the motor torque while results in \fref{fig: fric result} are used for friction identification.
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{| l c r |}
-    \hline
-    1 & 2 & 3 \\
-    4 & 5 & 6 \\
-    7 & 8 & 9 \\
-    \hline
-    \end{tabular}
-  \end{center}
-  \caption{A simple table}
-\end{table}
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{placeholder} 
+    \caption{Filtered data of external wrench detected from F/T sensor}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{placeholder}
+    \caption{Filtered data of motor torques}
+  \end{subfigure}
+  \caption{Sample data of the second joint high torque experiment}
+  \label{fig: push result}
+\end{figure}
 
-\begin{figure}[h!]  
-  \centering
-    \includegraphics[width=0.5\textwidth]{ntu_logo.png}
-  \caption{NTU logo}
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{placeholder} 
+    \caption{Calculated joint torque using OpenRave}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{placeholder}
+    \caption{Filtered data of motor torques}
+  \end{subfigure}
+  \caption{Sample data of the second joint high velocity experiment}
+  \label{fig: fric result}
 \end{figure}
 
 
-First eref \cite{Hao14} asdfsdf \\
+\section{Motor Torque Calibration}
+\subsection{Motor Torque Gain Identification}
+Based on the setup that has been mentioned in subsection \ref{push exp}, it is known that during the experiment the joints are stationary and hence $\dot{q} = 0$ , $\ddot{q} = 0$. Also since it is not moving, there is no friction effect for the joint. And by using relation in (\ref{denso eq}) and (\ref{tor wrench eq}), equation (\ref{dynamic eq}) can be simplified to: 
 
-Second \cite{Beyl11} asfdasdf \\
+\begin{equation}
+  K_{denso} \tau_{denso} + J^{T} F_{ext}  = G\left(q \right) \\
+\end{equation}
 
-Third \cite{Bona05} asfdsf\\
+Taking the reference value when there is no external wrench (at $F_{ext} = 0$), the above equation becomes:
 
-fourth \cite{Ohi91} \\
+\begin{equation}
+  K_{denso} \tau_{denso}^{\prime} = - J^{T} F_{ext} \\
+\end{equation}
+
+This makes the calibration of $K_{denso}$ becomes more easier to identify as it is a simple linear problem. To get the value of $K_{denso}$, the model is optimized from the data ($\tau_{denso}^{\prime}$, $F_{ext}$) that has been gathered. The optimization is done using nelder-mead method. 
+
+The diagram in \fref{fig: tor calibration} shows the plot of $\tau_{denso}^{\prime}$ against $- J^{T} F_{ext}$. The red dots represent the experimental data while the black line is the model with optimized parameter $K_{denso}$. As it can be seen, the data is not perfectly linear as what it is supposed to. The nonlinearity especially happens around zero value. The reason might be because of the deadzone in motor controller: where errors below some value will be counted as zero. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{$\tau_{denso}^{\prime}$ vs $- J^{T} F_{ext}$ in high torque experiment for second joint}
+    \label{fig: tor calibration}
+\end{figure}
+
+\subsection{Verification of Motor Torque Calibration}
+To verify the value of $K_{denso}$, a simple setup experiment can be done. The setup can be described like this: for one joint, the robot is positioned such that the motor will exert some torque due to the weight of the links only. Because it is not moving and no external force is introduced, the dynamic equation is reduced to be :
+
+\begin{equation}
+  K_{denso} \tau_{denso} = G\left(q \right) \\
+\end{equation}
+
+The value of $G\left(q \right)$ is computed using OpenRave. The value should be comparable to the left side of equation. 
+
+However, the figure in \fref{fig: tor verification} a different result. The continuous line represents the torque computed from OpenRave, (e.g.:$G\left(q \right)$) and the strip line represents the motor torque after calibration (e.g.: $K_{denso} \tau_{denso}$). It is very clear that value is not the similiar. The value given in OpenRave is much higher than motor torque. There are two possibilites that might be the reason of this differences, which are: 1) The gain value ($ K_{denso} $) is incorrect due to some problems that might arise in F/T sensor (i.e.: F/T sensor not calibrated) or 2) The OpenRave gives incorrect computation. It is quite difficult to investigate the second reason as until now the real dynamic parameters of the Denso arm has not been identified, thus torque computation of dynamic motion could not be done for now. 
+
+Hence, from this verification it can be found that there are some pieces that are still missing. And so, validation could not be done for now.
+ 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{Joint Torque Verification for Second joint}
+    \label{fig: tor verification}
+\end{figure}
+
+
+\section{Friction Identification}
+\subsection{Idenfication of Dahl Model}
+In the early stage of the progress, Dahl model was chosen as the friction model for the system. The optimization of the model was done to fit with the data. The result is shown in \fref{fig: Dahl model fit}. The root-mean-square of the fitting model seem to gives a good result. However, lot of problems were found during the implementation of the model. This comes from the disadvantages of the model itself. Hence, at some stage it is decided to leave the model and change to static friction model which is easier to implement.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{Fitting of Dahl Model}
+    \label{fig: Dahl model fit}
+\end{figure}
+
+\subsection{Static Friction Model}
+
+
+
+

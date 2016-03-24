@@ -1,32 +1,23 @@
 \chapter{Literature Review}
-\section{Background}
-\section{Purpose and scope }
+
+A typical six degrees of freedom robotic arm has many applications. By having a six degrees of freedom, it can moves freely in all translations and orientations. This robustness is one advantage that five or less degrees of freedom do not have. Thus, it is obvious to have many applications for such manipulator arm. Depending on the attached end-effector it has many purposes. For example, by attaching a gripper on the end-effector, it can perform assembly task or pick and place task. On the other hand, if a drill or a torch is attached, it can be used for drilling or welding in industries. While the arm can also be used for assembly operation, its performance has still to be improved. 
+
+Particularly for robotic assembly tasks, to perform a versatile assembly the robotic arm must be able to cooperate with a lot of uncertainites in the dynamic environment. One example, the manipulator has to be able to know when the contact with an object is happening and then maintaining the stable contact throughout the task. This ability requires knowledge of contact force for the robot. Thus, estimation of contact forces is very important since it will help the robot to determine and control the contact with objects in dynamics environment. While this can be done using accurate force/torque sensor, the sensor is normally expensive and requires mechanical integration with the robotic arm \cite{Hao15}. Hence in some arms it might not be possible to attach this sensor.  
+ 
+In regards to this, many researches have been done in order to estimate the contact force. The main idea to estimate the contact force is to directly apply dynamic equations of a robot, knowing the value of joint torques. However different approaches have also been explored in the past few decades. Early approaches use observers for force estimation like in \cite{Ohi91}. Another approach in \cite{Stolt12} involves detune the low-level joint position control loop to estimate contact force. Furthermore, recent approaches by using Bayesian approach and generalized momentum with Kalman filter are studied in \cite{Hao14} and \cite{Hao15} respectively. Additionally, studies of comparison between two different approaches are done in \cite{Beyl11}. The study compares the result from filtered dynamic equation of external force with generalized momentum method. More details of these works will be explained in the next subsection.
 
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{| l c r |}
-    \hline
-    1 & 2 & 3 \\
-    4 & 5 & 6 \\
-    7 & 8 & 9 \\
-    \hline
-    \end{tabular}
-  \end{center}
-  \caption{A simple table}
-\end{table}
+\section{Related Works}
 
-\begin{figure}[h!]  
-  \centering
-    \includegraphics[width=0.5\textwidth]{ntu_logo.png}
-  \caption{NTU logo}
-\end{figure}
+The purpose of this project is very similiar to \cite{Hao14} in which the paper aims to estimate the contact force by using motor torques. However, the focus of the authors is on the new extensive method to further improved the estimation value. First, they introduce the problem description which start from the basic dynamic of robotic system. And then the paper begins explaining the solution to estimate the contact force by using Bayesian approach. It depends on tuning the covariance matrices in their Bayesian method to estimate the error estimatation and hence compensate it to get the more accurate contact force. Apart from there, the paper also consider the friction discussion since it will affect the result quite severe. Based on the previous paper, they concludes that by using a simple static friction model which is a coulomb and viscous friction model, they can get a reasonable calculation of the friction. To calculate the friction model, the robot was moved in a free motion without any load since in this case the friction will play a major role. The next part is where the authors introduce steps that needs to be done to use the new proposed method and the results of their experiments. They summarized that their method has been verified with the experimental data.
+
+Another research which most of the authors are the same in \cite{Hao14} propose a different approach in estimating the contact force of robotic manipulator \cite{Hao15}. This time, they use generalized momentum to simplified the basic robotic system equation. And from there, Kalman filter was used to have better estimation of the cartesian contact force. Unfortunately, the method presented in this paper could not be used now as the dynamic parameters such as mass, inertia moment, etc. are needed for generalized momentum. However, as for now the identification of those parameters have not been done for the manipulator arm that is going to be used. Hence, this method will not be applicable as for now, until dynamic parameters of the arm has been identified.
 
 
-First eref \cite{Hao14} asdfsdf \\
+A study by \cite{Stolt12} shows that a force estimation can be performed by playing with the low-level joint control loop. The basic idea is that joint control error will act like a spring and hence, force can be estimatid based on this control error. The idea was verified in a small part of assembly task. 
 
-Second \cite{Beyl11} asfdasdf \\
 
-Third \cite{Bona05} asfdsf\\
+One interesting paper by \cite{Beyl11} compared about two different ways to estimate contact force at the end-effector of the robot. The methods they disccussed are: recursive least-square algorithm with filtered dynamic model approach and generalized momentum based disturbance observer. It is notable that in this paper, they also use the simple static friction model like what \cite{Hao14} used. After running the simulation and experiments, it was found that both of approaches give a similiar results despite a different origin. It was suggested that observer-based algorithm is better if fast response is needed, while least-squares based algorithm is better for system with noise and time lag tolerance.
 
-fourth \cite{Ohi91} \\
+
+To sum up, there are many approaches to estimate the contact force of end-effector manipulators that have been studied. While each have their own advantages and disadvantages, all of the methods are sourced from the basic dynamic system of the robot. 

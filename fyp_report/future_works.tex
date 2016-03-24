@@ -1,32 +1,11 @@
 \chapter{Conclusion and Future Works}
-\section{Background}
-\section{Purpose and scope }
 
+This project studies about contact force estimation using motor currents. This project specifically study about the Denso VS-060 arm. Previous works have been reviewed about many advance approaches that has been researched to estimate the contact forces without force sensor. Due to some limitations, not all of the methods can be applied for this project. 
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{| l c r |}
-    \hline
-    1 & 2 & 3 \\
-    4 & 5 & 6 \\
-    7 & 8 & 9 \\
-    \hline
-    \end{tabular}
-  \end{center}
-  \caption{A simple table}
-\end{table}
+A basic dynamic system was used as a fundamental model to estimate the contact force. A friction model was needed in the model and two basic friction were choosen: viscous and Coulomb model (static friction) and Dahl model (dynamic friction). To be able to estimate contact force without force / torque sensor, identification of unknown parameters of the system is needed. In general, two parameters were to be identified, they are: friction and gain parameter from denso motor currents / torques to real value of joint torque from motor. 
 
-\begin{figure}[h!]  
-  \centering
-    \includegraphics[width=0.5\textwidth]{ntu_logo.png}
-  \caption{NTU logo}
-\end{figure}
+Before continue with experiments, problem regarding motor currents were present and hence it had to be solved first. The problem was that the motor currents would always give positive value, thus a way to determine the sign of the currents was needed. A solution to this was to use motor torques as it also had the sign value along with the number. Hence, there is no need to use motor currents anymore as motor torques are now available. 
 
+During early stage of experiment, one-stage experiment was performed to capture all the phenomenas. It this then discarded and changed to two-stage experiment as the setup gives complicated meaning. The two-stage experiment had two experiments for each of joints, they are: high torque collection data to measure the denso gain($K_{denso}$) of the motor joint and high speed collection data to capture friction data of the joint.
 
-First eref \cite{Hao14} asdfsdf \\
-
-Second \cite{Beyl11} asfdasdf \\
-
-Third \cite{Bona05} asfdsf\\
-
-fourth \cite{Ohi91} \\
+The results were then obtained from the two-stage experiment. the denso gain was determined from the high torque experiment although the data were not perfectly linear due to the possibilty of deadzone. For friction part, Dahl model was first considered. While the result of Dahl was excellent, the model was hard to implement due to its disadvantages. Hence, simple static friction was then chosen for the friction model. While the result was not better than Dahl, based on researches it gives a reasonable result. 

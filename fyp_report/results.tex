@@ -1,5 +1,17 @@
 \chapter{Results and Model Identification}
-\section{Preliminary Results}
+\section{Identification for One-stage Experiment}
+In the early stage of the progress which is one-stage experiment, Dahl model was chosen as the friction model for the system. The optimization of the model was done to fit with the data. The result is shown in \fref{fig: Dahl model fit}. The root-mean-square of the fitting model seem to gives a good result. However, lot of problems were found during the implementation of the model. This comes from the disadvantages of the model itself. Hence, at some stage it is decided to leave the model and change to static friction model which is easier to implement.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{placeholder}
+    \caption{Fitting of Dahl Model}
+    \label{fig: Dahl model fit}
+\end{figure}
+
+
+
+\section{Preliminary Results for Two-stage Experiment}
 Two figures below are some samples of the collected data during the experiment. The whole data are available in the $APPENDIX$. The data has been filtered to eliminate the noise reading available from the sensor or motor. It uses low pass filter for smoothing the result. Low pass filter for F/T sensor have the order of 3 with cutoff frequency of 2 Hz. As for the motor torque, the low pass filter is set to have the order of 5 and cutoff frequency of 1 Hz.
 
 \fref{fig: push result} represents the result of high torque experiment for one of the joint and \fref{fig: fric result} represents the data collected during the free motion experiment. The results from \fref{fig: push result} will be further processed for calibrating the motor torque while results in \fref{fig: fric result} are used for friction identification.
@@ -82,17 +94,6 @@ Hence, from this verification it can be found that there are some pieces that ar
 
 
 \section{Friction Identification}
-\subsection{Idenfication of Dahl Model}
-In the early stage of the progress which is one-stage experiment, Dahl model was chosen as the friction model for the system. The optimization of the model was done to fit with the data. The result is shown in \fref{fig: Dahl model fit}. The root-mean-square of the fitting model seem to gives a good result. However, lot of problems were found during the implementation of the model. This comes from the disadvantages of the model itself. Hence, at some stage it is decided to leave the model and change to static friction model which is easier to implement.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 0.4\textwidth ]{placeholder}
-    \caption{Fitting of Dahl Model}
-    \label{fig: Dahl model fit}
-\end{figure}
-
-\subsection{Static Friction Model}
 
 
 

@@ -31,7 +31,7 @@ On the other hand, transformation of the end-effector force/torque to the joint 
   \tau_{ext} &= J^{T} F_{ext}
 \end{equation}
 
-Where $J^{T} \in \mathbb{R}^{6 \times 6}$ is the transpose of jacobian matrix and $F_{ext} = \left[F \;   \tau\right] \in \mathbb{R}^{6 \times 1}$ is the contact force. It is also important to consider friction since it can cause large error in manipulators \cite{aaaaa}. However, the modeling of friction is not easy as there are a lot of phenomenas in the friction itself. Thus, it is good to choose the simplest model that can have a reasonable result. The next section below will explain the friction model in more detail.
+Where $J^{T} \in \mathbb{R}^{6 \times 6}$ is the transpose of jacobian matrix and $F_{ext} = \left[F \;   \tau\right] \in \mathbb{R}^{6 \times 1}$ is the contact force. It is also important to consider friction since it can cause large error in manipulators \cite{kerm04}. However, the modeling of friction is not easy as there are a lot of phenomenas in the friction itself. Thus, it is good to choose the simplest model that can have a reasonable result. The next section below will explain the friction model in more detail.
 
 \section{Friction Model}
 In general, friction models can be divided into two categories: static and dynamic friction. A model that depends only on current velocity is called static friction, whereas the friction related to non-stationary velocities is called dynamic model. 

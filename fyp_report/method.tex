@@ -45,7 +45,7 @@ In the early process of the project, one-stage experiment was executed. The expe
     \includegraphics[width = \textwidth ]{one_stage_2}
     \caption{robot push the ground in a sinusoidal motion.}
   \end{subfigure}
-  \caption{fig: One-stage experiment simulation}
+  \caption{One-stage experiment simulation}
 \end{figure}
 
 The purpose of this experiment is to capture all of the phenomenas (friction and contact force) in one experiment and so, identification of all parameters can be done for each joint in one experiment. Furthermore, depending on the setup one experiment can test for more than one joint at the same time, thus cutting the time to do the experiment. 
@@ -53,6 +53,7 @@ The purpose of this experiment is to capture all of the phenomenas (friction and
 While it is feasible to do so, identification of the parameters turned out to be quite messy. The reasons are: 1) while all effects of the phenomena can be captured, it is difficult to distinguish one with each other, hence making it difficult in identifying each parameter and 2) performing the experiment for two or more joints at the same time was messy and not clean. Hence, the setup of experiment was then changed to be two-stage experiment.
 
 \section{Two-Stage Experiment}
+\label{two-stage experiment}
 There are two stage of experiments which are required to identify the two important parameters : $K_{denso}$ and $\tau_{friction}$ (see chapter \ref{model}). The purpose of setting different type of experiment is to eliminate the effect of other parameter, thus the resulted data is affected only because of one parameter. That way the identification of each parameter tends to be easier and more accurate. The first stage of experiment is the high torque collection data to calibrate the motor torque ($K_{denso}$) while the second stage of experiment is the high velocity collection data which is performed to identify the $\tau_{friciton}$ characteristics. The data is captured in broad range of value to capture as many phenomena as possible.
 
 
@@ -70,8 +71,20 @@ The experiment is meant to collect the torque measurement from wide range to cal
 
 \subsection{High Velocity Collection Data}
 \label{fric exp}
+The setups for this experiment are based on \cite{Nori15} and \cite{Ngoc09}. To capture the friction phenomena, one joint of interest will be moved in a sinusoidal motion. However, the robot must be positioned accordingly such that when this joint is moving, the gravity effect of the links is either zero/unaffected or constant, thus making the interested joint moves purely because of inertia of the linkages and joint friction. Experiments where the joint torque will not be affected by gravity can be done for all joints except second and third joint. The four joints are then moved with the equation of motion:
 
-For this second experiment, the robot is moving in a free motion. Thus, a free rotation with different velocity is performed for each of respective joints. In this way, the effect of friction can be clearly caprtured. Motor torques, and joint positions which are crucial parameters are recorded from Denso manipulator for further analysis. See figure below for illustration.
+\begin{equation}
+  q = \left(a_{0} + at\right) sin(\omega t)\\
+\end{equation}
+
+On the other hand, setups for the second and third joints will be slightly different as gravity will always affect these two joints. Thus, other setups are to position the robot such that $\frac{dG}{dq}$ is minimized for the respective joint. In this way, the changes in the denso torques due to the gravity will be minimized. However, it means that the joint cannot be moved too far from the position and hence, the previous equation of motion cannot be used for the setup as it tends to move further from the stable position. Instead, another equation of motion will be executed for these two joints:
+
+\begin{align}
+  q &= \left(a_{0}\right) sin(\omega_{t} t)\\
+  \omega_{t} &= \omega_{0} + B t 
+\end{align}
+
+The figures below illustrate the joint movements during the high velocity experiments. During the experiments data of denso torques, joint positions, and F/T sensor are recorded.
 \begin{figure}[H]
 \centering  
   \begin{subfigure}[t]{0.3\textwidth}
@@ -86,7 +99,5 @@ For this second experiment, the robot is moving in a free motion. Thus, a free r
     \centering
     \includegraphics[width = \textwidth ]{high_vel_3}
   \end{subfigure}
-  \caption{fig: High veloctiy collection data experiment for third joint}
+  \caption{fig: High veloctiy collection data experiment for first joint}
 \end{figure}
-
-

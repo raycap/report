@@ -1,6 +1,5 @@
 \chapter{Model Validations}
-
-So far, the validation has been done only for the results from one-stage experiment. Verification of the parameters identified in the two-stage experiment could not be performed since identification of the friction still have some problems that need to be solved. 
+\label{validation}
 
 \section{Results Verification from One-stage Experiment}
 
@@ -40,11 +39,11 @@ After identifying the paramaters for all the required equation, developed algori
   \label{fig:torque validation}
 \end{figure}
 
-In \fref{fig:Dahl tor} it is quite clear that Dahl algorithm gives a good estimation for second and third joint. However, it is bad when estimating the first joint. This is more likely due to two reasons. First, the initial state of $z$ might be incorrect. For every arm position, it is supposed to have specific state of $z$, however as we lack of knowledge of this value, it was only calculated using some basic assumption. The second reason is due to stability of motor currents. Since change of internal state is a function of rate of motor currents, unstable motor currents will drift the value of $z$. However, seeing that the value of first joint seems drifted over time, hence it is more likely that the second reason is the main problem. Due to this problems, it is then decided to leave the Dahl model for the rest of the progress.
+In \fref{fig:Dahl tor} it is quite clear that Dahl algorithm gives a good estimation for second and third joint. However, it is bad when estimating the first joint. This is more likely due to two reasons. First, the initial state of $z$ might be incorrect. For every arm position, it is supposed to have specific state of $z$, however as we lack of knowledge of this value, it was only calculated using some basic assumption. The second reason is due to stability of motor currents. Since change of internal state is a function of rate of motor currents, unstable motor currents will drift the value of $z$. However, seeing that the value of first joint seems to be drifted over the time, hence it is more likely that the second reason is the main problem. Due to these problems, it is then decided to leave the Dahl model for the rest of the progress.
 
 On the other hand, the results using coulomb and viscous can be seen in \fref{fig:static validation} and \fref{fig:static tor}. The estimated force in x-axis is quite satisfactory and this is the main force that acting on the robot. However, the force estimation of other axis is not as good as the first one. This is because of the error estimation of external joint torques that leads to the force. The comparison of external joint torques estimation can be seen in \fref{fig:torque validation}. The root mean square error values of estimated contact force and torque using this model are presented in \tref{table:rmse}. On some aspects, especially for torques it has large errors. This is because there is no contact torques introduced, hence the value from force sensor is always near 0.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \begin{tabular}{| c | c | c | c |}
     \hline
@@ -60,4 +59,30 @@ On the other hand, the results using coulomb and viscous can be seen in \fref{fi
     \label{table:rmse}
 \end{table}
 
-While it gives a reasonable results for both model, this is partially because the old data was being used for validation, hence it is quite obvious that it will give a good estimation. Validation with new data will be required to really verify the developed model. 
+While it gives a reasonable results for both model, this is partially because the old data was being used for validation, hence it is quite obvious that it will give a good estimation. Validation with new data will be required to really verify the developed model. However, since the methodologies were changed in the middle, these results are not analysed further.
+
+
+\section{Validation from Two-Stage Experiment Results}
+\subsection{Comparison of Denso Torque and OpenRave Simulation}
+\label{Verification of Motor Torque Calibration}
+%~ Add the reason why it is important to do this
+To compare the value of calibrated denso torque with the OpenRave , a simple setup experiment can be done. The setup can be described like this: for one joint, the robot is positioned such that the motor will exert some torques due to the weight of the links only. Because it is not moving and no external force is introduced, the dynamic equation is reduced to be :
+
+\begin{equation}
+  K_{denso} \tau_{denso} = G\left(q \right) \\
+\end{equation}
+
+The value of $G\left(q \right)$ is computed using OpenRave. The value should be comparable to the left side of equation. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth ]{high_tor_val}
+    \caption{Joint Torque Verification for Second joint}
+    \label{fig: tor verification}
+\end{figure}
+
+However, the figure in \fref{fig: tor verification} shows a different result. The continuous line represents the torque computed from OpenRave, (e.g.:$G\left(q \right)$) and the strip line represents the motor torque after calibration (e.g.: $K_{denso} \tau_{denso}$). It is very clear that values are not similiar. The value given in OpenRave is much higher than calibrated denso torque. There are two possibilites that might be the reason of this differences, which are: 1) The gain value ($ K_{denso} $) is incorrect due to some problems that might arise in F/T sensor (i.e.: F/T sensor not calibrated) or 2) The OpenRave gives incorrect computation. It is quite difficult to investigate the second reason as until now the real dynamic parameters of the Denso arm has not been identified, thus torque computation of dynamic motion could not be done for now except using OpenRave. On the other hand, the ATI F/T sensor  
+
+Hence, from this comparison it can be found that there are some pieces that are still missing. Because of this issue
+
+

@@ -1,7 +1,7 @@
 \chapter{Model Validations}
 \label{validation}
 
-\section{Results Verification from One-stage Experiment}
+\section{Validation of One-Stage Experiment Results}
 
 After identifying the paramaters for all the required equation, developed algorithm model now was built to estimate the contact force. Hence, there are two versions of algortithm, one that use Dahl and another one that use coulomb and viscous. The estimated force is then compared to real force from F/T sensor for validation. The results are shown in \fref{fig:validation}.
 
@@ -35,7 +35,7 @@ After identifying the paramaters for all the required equation, developed algori
     \caption{Using Dahl model}
     \label{fig:Dahl tor}
   \end{subfigure}
-  \caption{External joint torques estimation of \fref{fig:static validation} (- - : estimated output, -- : real output)}
+  \caption{External joint torques estimation of \fref{fig:validation} (- - : estimated output, -- : real output)}
   \label{fig:torque validation}
 \end{figure}
 
@@ -62,27 +62,51 @@ On the other hand, the results using coulomb and viscous can be seen in \fref{fi
 While it gives a reasonable results for both model, this is partially because the old data was being used for validation, hence it is quite obvious that it will give a good estimation. Validation with new data will be required to really verify the developed model. However, since the methodologies were changed in the middle, these results are not analysed further.
 
 
-\section{Validation from Two-Stage Experiment Results}
-\subsection{Comparison of Denso Torque and OpenRave Simulation}
-\label{Verification of Motor Torque Calibration}
-%~ Add the reason why it is important to do this
-To compare the value of calibrated denso torque with the OpenRave , a simple setup experiment can be done. The setup can be described like this: for one joint, the robot is positioned such that the motor will exert some torques due to the weight of the links only. Because it is not moving and no external force is introduced, the dynamic equation is reduced to be :
+\section{Validation of Two-Stage Experiment Results}
 
-\begin{equation}
-  K_{denso} \tau_{denso} = G\left(q \right) \\
-\end{equation}
+New setups and data that differ from identification data were performed and collected. The algorithm in section \ref{algorithm} was then used to estimate the contact force in offline mode. The results were then compared with the real contact force measured from F/T sensor. 
 
-The value of $G\left(q \right)$ is computed using OpenRave. The value should be comparable to the left side of equation. 
+Three types of contact was performed for the validation. First is static contact force, where the robot was fixed and external force was then introduced to the robot. Second is where the robot was pushing an object in a continuous sinusoidal motion. And the last contact type is where the robot pushed an object with a step function.  
+
+The results could be seen in \fref{fig:force validation 2} for all types of contact. The continuous lines are the measurement from F/T sensor while the strip lines represent the predicted value using the developed algorithm. Results for individual axis can be examined in the appendix (see \fref{fig:appendix static contact} - \fref{fig:appendix step contact}). The root-mean-square from these data are also given in the next table.
 
 \begin{figure}[H]
+  \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = 0.6\textwidth ]{high_tor_val}
-    \caption{Joint Torque Verification for Second joint}
-    \label{fig: tor verification}
+    \includegraphics[width = \textwidth ]{fig16} 
+    \caption{Static contact force}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{fig17}
+    \caption{Sinusoidal contact force}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{fig17}
+    \caption{Step function contact force}
+  \end{subfigure}
+  \caption{Verification of developed model for various contact type(- - : estimated output, -- : real output)}
+  \label{fig:force validation 2}
 \end{figure}
 
-However, the figure in \fref{fig: tor verification} shows a different result. The continuous line represents the torque computed from OpenRave, (e.g.:$G\left(q \right)$) and the strip line represents the motor torque after calibration (e.g.: $K_{denso} \tau_{denso}$). It is very clear that values are not similiar. The value given in OpenRave is much higher than calibrated denso torque. There are two possibilites that might be the reason of this differences, which are: 1) The gain value ($ K_{denso} $) is incorrect due to some problems that might arise in F/T sensor (i.e.: F/T sensor not calibrated) or 2) The OpenRave gives incorrect computation. It is quite difficult to investigate the second reason as until now the real dynamic parameters of the Denso arm has not been identified, thus torque computation of dynamic motion could not be done for now except using OpenRave. On the other hand, the ATI F/T sensor  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{| c | c | c | c |}
+    \hline
+    \multicolumn{4}{|c|}{Root Mean Square of Various Contact Type} \\\hline
+              & static (\%) & sinusoidal (\%)  & step (\%)    \\ \hline
+    Force x   & 26.744215   &  11.800553       &  6.092769    \\ \hline
+    Force y   & 13.456419   &  79.020539       &  60.123212   \\ \hline
+    Force z   & 18.861452   &  56.188314       &  29.462614   \\ \hline
+    Torque x  & 47.856514   &  258.685240      &  138.794379  \\ \hline
+    Torque y  & 87.817204   &  518.882265      &  265.491042  \\ \hline
+    Torque z  & 129.680860  &  87.633992       &  44.686174   \\ \hline
+    \end{tabular}
+    \caption{Root mean square value for all types of contact}
+    \label{table:rmse 2}
+\end{table}
 
-Hence, from this comparison it can be found that there are some pieces that are still missing. Because of this issue
+From the root mean square value, the estimation gives horrible results for some of the axis. There are two possible explanations for this: 1) The range of external force/torque introduced is small and 2) The effect of the deadzone. For example, torque z in static contact force has a large error that possibly due to the large deadzone of the sixth joint (see \fref{fig:denso gain sixth joint}). On the other hand, torque x and y have a bad estimation during the sinusoidal and step contact force since for this experiment only external force x and z are introduced, thus making the range value is small. In contrast, the model can give a much better estimation for axis with large range of external torque/force. For instance, force x during sinusoidal and step motion has a good estimation of the force. 
 
-
+Hence, it can be concluded that the model will work better when contact force/torque is large and it will perform poorly for small contact force. 

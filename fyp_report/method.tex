@@ -50,7 +50,7 @@ In the early process of the project, one-stage experiment was executed. The expe
 
 The purpose of this experiment is to capture all of the phenomenas (friction and contact force) in one experiment and so, identification of all parameters can be done for each joint in one experiment. Furthermore, depending on the setup one experiment can test for more than one joint at the same time, thus cutting the time to do the experiment. 
 
-While it is feasible to do so, identification of the parameters turned out to be quite messy. The reasons are: 1) while all effects of the phenomena can be captured, it is difficult to distinguish one with each other, hence making it difficult in identifying each parameter and 2) performing the experiment for two or more joints at the same time was messy and not clean. Hence, the setup of experiment was then changed to be two-stage experiment.
+While it is feasible to do so, identification of the parameters turned out to be quite messy. The reasons are: 1) while all effects of the phenomena can be captured, it is difficult to distinguish one with each other, hence making it difficult in identifying each parameter and 2) performing the experiment for two or more joints at the same time is not recommended as it can be seen as inconsistent experiment (e.g: one experiment that captures for one joint might give different results when captures for two joints). Hence, the setup of experiment was then changed to be two-stage experiment.
 
 \section{Two-Stage Experiment}
 \label{two-stage experiment}
@@ -77,7 +77,7 @@ The setups for this experiment are based on \cite{Nori15} and \cite{Ngoc09}. To 
   q = \left(a_{0} + at\right) sin(\omega t)\\
 \end{equation}
 
-On the other hand, setups for the second and third joints will be slightly different as gravity will always affect these two joints. Thus, other setups are to position the robot such that $\frac{dG}{dq}$ is minimized for the respective joint. In this way, the changes in the denso torques due to the gravity will be minimized. However, it means that the joint cannot be moved too far from the position and hence, the previous equation of motion cannot be used for the setup as it tends to move further from the stable position. Instead, another equation of motion will be executed for these two joints:
+On the other hand, setups for the second and third joints will be slightly different as gravity will always affect these two joints. Thus, other setups are to position the robot such that $\frac{dG}{dq}$ is minimized for the respective joint. In this way, the changes in the motor torques due to the gravity will be minimized and hence, it is expected to give a similiar results with the other four joints. However, this means that the joint cannot be moved too far from the position and so the previous equation of motion cannot be used for the setup as it tends to move further from the stable position. Instead, another equation of motion will be executed for these two joints:
 
 \begin{align}
   q &= \left(a_{0}\right) sin(\omega_{t} t)\\

@@ -89,22 +89,21 @@ Two figures below are some samples of the collected data during the experiment. 
 \end{figure}
 
 
-\section{Motor Torque Calibration}
-\subsection{Motor Torque Gain Identification}
+\section{Motor Torque Gain Identification}
 Based on the setup that has been mentioned in subsection \ref{push exp}, it is known that during the experiment the joints are stationary and hence $\dot{q} = 0$ , $\ddot{q} = 0$. Also since it is not moving, there is no friction effect for the joint. And by using relation in (\ref{denso eq}) and (\ref{tor wrench eq}), equation (\ref{dynamic eq}) can be simplified to: 
 
 \begin{equation}
   K_{denso} \tau_{denso} = - J^{T} F_{ext} + G\left(q \right) \\
 \end{equation}
 
-This makes the calibration of $K_{denso}$ becomes more easier to identify as it is a simple linear problem. To get the value of $K_{denso}$, the model is optimized from the data ($\tau_{denso}^{\prime}$, $F_{ext}$) that has been gathered. The optimization is still done by using nelder-mead method. 
+This makes the calibration of $K_{denso}$ becomes more easier to identify as it is a simple linear problem. To get the value of $K_{denso}$, the model is optimized from the data ($\tau_{denso}$, $F_{ext}$) that has been gathered. The optimization is still done by using nelder-mead method. 
 
-The diagram in \fref{fig: tor calibration} shows the plot of $\tau_{denso}^{\prime}$ against $- J^{T} F_{ext}$. The green line represents the experimental data while the black line is the model with optimized parameter $K_{denso}$. As it can be seen, the data is not perfectly linear as what it is supposed to. The reason might be because of the deadzone in motor controller: where errors below some value will be counted as zero. 
+The diagram in \fref{fig: tor calibration} shows the plot of $\tau_{denso}$ against $- J^{T} F_{ext}$. The green line represents the experimental data while the black line is the model with optimized parameter $K_{denso}$. As it can be seen, the data is not perfectly linear as what it is supposed to. The reason might be because of the deadzone in motor controller: where errors below some value will be counted as zero. To adjust for this effect, piecewise-linear model can be used to fit the data. Although it will give better results, there are some limitations to the model that make the implementation to be difficult \cite{Nori15}. Hence, simple linear model is still chosen despite the unability to capture the deadzone. 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width = 0.6\textwidth ]{high_tor_iden}
-    \caption{$\tau_{denso}^{\prime}$ vs $- J^{T} F_{ext}$ in high torque experiment for second joint}
+    \includegraphics[width = 0.6\textwidth ]{A_6_2}
+    \caption{$\tau_{denso}$ vs $- J^{T} F_{ext}$ in high torque experiment for second joint}
     \label{fig: tor calibration}
 \end{figure}
 
@@ -136,8 +135,14 @@ From section \ref{fric exp} it is known the torques that were exerted during the
 Where $ I $ here is the inertia due to the arm links to the joint. Since all the joints are stationary except for the joint of interest, the inertia should remain constant. This equation is then fitted with the real data to get the three unknown parameters for each joint. Since the optimization now is more complex compared to denso gain identification, the results have to be bounded to make sure that the optimization will not give a wrong answer. Since all of the parameters cannot be negative, the boundary will be: $[K_{c}, K_{v}, I] \geq 0$. the optimization is now done by using Sequential Least SQuares Programming (SLSQP) method provided by SciPy Python. This is because SLSQP can give a boundary condition to the parameters which nelder-mead could not.
 
 
-Figure below shows the result of optimization to the real plot. 
-
+Figure below shows the result of optimization to the real plot for the first joint. It can be seen that the plot of the motor torques data are similiar with the static friction diagram(\fref{fig:static fric}) although there are some differences. These differences are most likely due to the inertia that affects the motor torques value. For the second and third joint where inertia is involved, the differences can be seen clearer(\fref{fig:appendix high vel fric}). In contrast, the inertia involved for fourth and sixth joint is very small such that the plot is now look the same as static friction.
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth ]{A_7_1}
+    \caption{Results for friction identification}
+    \label{fig: fric iden}
+\end{figure}
 
 The identification results of all parameters for all joints are compiled on the table below: 
 \begin{table}[H]
@@ -145,13 +150,30 @@ The identification results of all parameters for all joints are compiled on the 
     \begin{tabular}{| c | c | c | c |}
     \hline
     Joint & $K_{c}$ & $K_{v}$ & $I$ \\ \hline
-    1 & 8.760254598800614   & 3.5593393087764476  & 1.2298914843787225\\ \hline
-    2 & 6.5844162226978975  & 16.631011445572256  & 1.6028523428327148\\ \hline
-    3 & 3.6559073575564893  & 7.240485152284423   & 0.4106659387975339\\ \hline
+    1 & 8.760254598800614   & 3.5593393087764476  & 1.2298914843787225        \\ \hline
+    2 & 6.5844162226978975  & 16.631011445572256  & 1.6028523428327148        \\ \hline
+    3 & 3.6559073575564893  & 7.240485152284423   & 0.4106659387975339        \\ \hline
     4 & 3.656967856159363   & 2.896319866560603   & 1.204029526208893$e^{-18}$\\ \hline
-    5 & 2.5006379799006013  & 3.798780079420939   & 0.12806276310671558\\ \hline
-    6 & 1.336290767286993   & 0.6059130581961736  & 0.0                \\ \hline
+    5 & 2.5006379799006013  & 3.798780079420939   & 0.12806276310671558       \\ \hline
+    6 & 1.336290767286993   & 0.6059130581961736  & 0.0                       \\ \hline
     \end{tabular}
     \caption{Identification of friction torque}
     \label{table:friction}
 \end{table}
+
+It is interesting to see that the results for fourth and sixth joints give a very small inertia value. This might be acceptable when considering the setup of the experiments for these two joints. \fref{fig:joint fric setup} show the setup for the fourth and sixth joints during the experiment. Based from this, the inertia will follow inertia of a cylindrical rod with small radius with the centerline as the rotation axis. This configuration will give a smaller value compared to other configurations. Because of this, the optimization will heavily emphasise friction more than the inertia.  
+
+\begin{figure}[H]
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{fig16} 
+    \caption{Fourth joint}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{fig17}
+    \caption{Sixth joint}
+  \end{subfigure}
+  \caption{Setup of fourth and sixth joints during high velocity experiment}
+  \label{fig:joint fric setup}
+\end{figure}

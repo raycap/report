@@ -3,41 +3,6 @@
 \setcounter{figure}{0}  
 \section*{One-stage Experiment Results}
 \begin{figure}[H]
-  \caption{Plotted data from the result}
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \includegraphics[width = \textwidth ]{one_stage_1} 
-    \caption{First Joint}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \includegraphics[width = \textwidth ]{one_stage_2}
-    \caption{Second Joint}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \includegraphics[width = \textwidth ]{one_stage_2}
-    \caption{Third Joint}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \includegraphics[width = \textwidth ]{one_stage_2}
-    \caption{Fourth Joint}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \includegraphics[width = \textwidth ]{one_stage_2}
-    \caption{Fifth Joint}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \includegraphics[width = \textwidth ]{one_stage_2}
-    \caption{Sixth Joint}
-  \end{subfigure}
-  \label{aa}
-\end{figure}
-
-\begin{figure}[H]
   \caption{Optimization using dynamic friction}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
@@ -208,6 +173,7 @@
     \centering
     \includegraphics[width = \textwidth ]{A_6_6}
     \caption{Sixth Joint}
+    \label{fig:denso gain sixth joint}
   \end{subfigure}
 \end{figure}
 
@@ -215,6 +181,7 @@
 \subsection*{High Velocity Collection Data}
 \begin{figure}[H]
   \caption{Friction Identification}  
+  \label{fig:appendix high vel fric}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
     \includegraphics[width = \textwidth ]{A_7_1} 
@@ -247,3 +214,123 @@
   \end{subfigure}
 \end{figure}
 
+\section*{Contact Force Estimation Algorithm}
+\begin{figure}[H]
+  \caption{Contact Force Estimation Algorithm}  
+  \label{fig:algo code}
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_8_1} 
+    \caption{snippet code}
+  \end{subfigure}
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_8_2}
+    \caption{snippet code (continued)}
+  \end{subfigure}
+\end{figure}
+
+\section*{Verification of Two-Stage Results}
+\begin{figure}[H]
+  \caption{Static contact force}
+  \label{fig:appendix static contact}  
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_1} 
+    \caption{Force x}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Force y}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Force z}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque x}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque y}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque z}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Sinusoidal contact force}  
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_1} 
+    \caption{Force x}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Force y}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Force z}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque x}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque y}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque z}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Step function contact force} 
+  \label{fig:appendix step contact} 
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_1} 
+    \caption{Force x}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Force y}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Force z}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque x}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque y}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width = \textwidth ]{A_6_2}
+    \caption{Torque z}
+  \end{subfigure}
+\end{figure}

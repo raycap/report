@@ -30,7 +30,7 @@ The value of $G\left(q \right)$ is computed using OpenRave. The value should be 
 
 However, the figure in \fref{fig: tor verification} shows a different result. The continuous line represents the torque computed from OpenRave, (e.g.:$G\left(q \right)$) and the strip line represents the motor torque after calibration (e.g.: $K_{denso} \tau_{denso}$). It is very clear that values are not similiar. The value given in OpenRave is much higher than calibrated denso torque. There are two possibilites that might be the reason of this differences, which are: 1) The gain value ($ K_{denso} $) is incorrect due to some problems that might arise in F/T sensor (i.e.: F/T sensor not calibrated) or 2) The OpenRave gives incorrect computation. It is quite difficult to investigate the second reason as until now the real dynamic parameters of the Denso arm have not been identified, thus torque computation of dynamic motion could not be done for now except using OpenRave. On the other hand, the ATI F/T sensor should have been calibrated before the experiments, thus the first possibility is unlikey to happen. 
 
-Hence, from this comparison it can be found that there are some pieces that are still missing. Since the OpenRave result has not beed investigated whether it is truly correct or not, it is decided not to use the OpenRave to compute the dynamic torque. However, it makes a hole in the model estimation since the dynamic torque is required. To solve this problem, quasi-static assumption is used in the model to fill the hole in the model. 
+Hence, from this comparison it can be found that there are some pieces that are still missing. Since the OpenRave result has not been investigated whether it is truly correct or not, it is decided not to use the OpenRave to compute the dynamic torque. However, it makes a hole in the model estimation since the dynamic torque is required. To solve this problem, quasi-static assumption is used in the model to fill the hole in the model. 
 
 \section{Quasistatic Based Model}
 
@@ -59,7 +59,7 @@ The following algorithm is created based on the quasistatic model that has been 
 
 2) Move the robot slowly to the contact position.
 
-3) Quickly make the initialization to the denso torque and friction. For each joint, take the current value of the denso torque as a zero-based value ($\tau_{denso , init} $) and calculate the friction from the joint velocity and store the value in the $\tau_{fric , ref}$.
+3) Quickly make the initialization to the denso torque and friction. For each joint, take the current value of the denso torque as a zero-based value ($\tau_{denso , init} $) and calculate the friction from the joint velocity and store the value in the $\tau_{fric , ref}$. There are two points that can be choosen as reference points, they are: A. The point where the robot is not moving yet (step 1) or B. The point right after the robot starts to move (step 2). The only difference about these twp points is about the presence of friction. However, since the friction has been identified, ideally these two points should give the same results.
 
 4) Estimate the contact force based on denso torques and joint velocities. The denso torque is then subtracted by $\tau_{denso , init}$ to get $\tau_{denso}^{\prime}$ while joint velocity is used to estimate the friction part. Use the equation (\ref{quasistatic}) to get the contact force estimation.
 

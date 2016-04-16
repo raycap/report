@@ -1,6 +1,6 @@
 \chapter{Equipments}
 
-In this project, necessary equipments, software, and robotic arm that are going to be used are: 1 $\times$ Denso VS060A3-AV6 arm, 1 $\times$ end-effector handle, 1 $\times$ ATI Gamma F/T Sensor (SI-32-2.5 calibration), Ubuntu 12.04 LTS, OpenRave, and Denso ROS. 
+In this project, necessary equipments, software, and robotic arm that are going to be used are: 1 $\times$ Denso VS060A3-AV6 arm, 1 $\times$ end-effector handle, 1 $\times$ ATI Gamma F/T Sensor (SI-32-2.5 calibration), 1 $\times$ Robotiq gripper, Ubuntu 12.04 LTS, OpenRave, and Denso ROS. 
 
 \section{Denso VS060}
 Denso VS060A3-AV6 is a six DOF robotic arm from Denso company. It has absolute encoder for all of its joint position.  An RC-8 controller is also provided for interfacing with this arm. The computer is connected to Denso arm via LAN cable. The architecture of the hardware interface for this arm can be seen in figure below. By using Denso ROS as the ROS, the robot can be moved by sending a command position or a list of positions. Thus, controlling the robot from velocity or acceleration domain are not necessary as it has been taken care by the program and controller.
@@ -29,8 +29,17 @@ ATI Gamma F/T sensor SI-32-2.5 is used for the experiment. It has been calibrate
     \label{fig:F/T sensor}
 \end{figure}
 
+\section{Robotiq Gripper}
+This two-finger gripper from Robotiq will be used for this project to perform one particular assembly task, which is pin insertion to the hole. The gripper has an opening up to 85 mm and a grip force from 5 to 220N. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.4\textwidth ]{robotiq_gripper}
+    \caption{Robotiq gripper}
+    \label{fig:robotiq}
+\end{figure}
+
 \section{End-effector handle}
-This is the handle of the end-effector arm. It has a round sphere surface. The arm will make a contact with environments through this handle.
+This is the handle of the end-effector arm. It has a round sphere surface. The arm will make a contact with environments through this handle. This handle is primarily used for model parameters identification.
 \begin{figure}[H]
     \centering
     \includegraphics[width = 0.4\textwidth , angle = 90]{handle}

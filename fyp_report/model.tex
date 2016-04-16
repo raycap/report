@@ -8,7 +8,7 @@ The basic dynamic equation of a six degrees of freedom (6-DOF) robotic arm is de
   \Sigma \tau_{joint} = \tau_{mot} + \tau_{ext}  = M\left(q\right)\ddot{q} + C\left(\dot{q} , q \right)\dot{q} + G\left(q \right) + \tau_{friction}\\
 \end{equation}
 
-Where $\tau_{mot}$ is the motor torque, $\tau_{ext}$ is the external wrench / torque applied to the respective joint where in this project is due to end-effector force / torque, and $\tau_{friction}$ is the torque because of joint friction. $M\left(q\right)$ defines the inertia matrix, $
+Where $\tau_{mot}$ is the motor torque, $\tau_{ext}$ is the external torques applied to the respective joint where in this project is due to end-effector force / torque, and $\tau_{friction}$ is the torque because of joint friction. $M\left(q\right)$ defines the inertia matrix, $
 C\left(\dot{q} , q \right)$ defines the coriolis matrix, and $G\left(q \right)$ is the joint torque resulting from gravity. In other words, for each of joint, the summation of external joint torques ($\tau_{mot} + \tau_{ext}$) are equal to the torques needed to overcome the friction and to perform the dynamic motion. Initially the motor torque will be calculated from motor currents by using the relation:
 
 \begin{equation}
@@ -24,7 +24,7 @@ However, there is a problem regarding motor currents where the solution is to ge
 
 Where $K_{denso}$ will be called denso gain for ease of reference.
 
-On the other hand, transformation of the end-effector force/torque to the joint wrench, the jacobian matrix is needed, which the equation is:
+On the other hand, transformation of the end-effector wrench to the external joint torques need a Jacobian matrix, which the equation is:
 
 \begin{equation}
 \label{tor wrench eq}
@@ -47,7 +47,7 @@ Viscous and Coulomb is the simplest form of static friction model. The basic mat
   F = F_{c} sign\left(\dot{x}\right) + \beta \dot{x}
 \end{equation}
 
-Where $F$ is the friction force, $\nu$ is relative velocity to contact surfaces, $\beta$ is the viscous friction coefficient, and $F_{c}$ is coulomb friction. The model however does not include the stiction effect. The stiction effect can be easily added into the model, that is: a movement can be created only when the applied external force is greater than friction force Fs \cite{Bona05}. By adding this effect and adjusting the equation for robotic arm, the equation will be:
+Where $F$ is the friction force, $\dot{x}$ is relative velocity to contact surfaces, $\beta$ is the viscous friction coefficient, and $F_{c}$ is coulomb friction. The model however does not include the stiction effect. The stiction effect can be easily added into the model, that is: a movement can be created only when the applied external force is greater than friction force Fs \cite{Bona05}. By adding this effect and adjusting the equation for robotic arm, the equation will be:
 
 \begin{equation}
   \tau_{friction} = K_{c} sign\left(\dot{q}\right) + K_{v} \dot{q}
@@ -82,4 +82,4 @@ Where $\sigma$ is the bristle stiffness parameter. Because of this internal stat
     \label{fig:Dahl fric}
 \end{figure}
 
-Unlike Coulomb and viscous friction model, Dahl model does not have discontinuous profile in the equation. This becomes one advantage Dahl model has over the static friction. However, since the model is more complex, it imposes some difficulties such as: estimation of initial state is not easy, it is sensitive to the parameter ($\sigma$), and the necessity of high precision data. 
+Unlike Coulomb and viscous friction model, Dahl model does not have discontinuous profile in the equation. This becomes one advantage Dahl model has over the static friction. However, since the model is more complex, it imposes some difficulties such as: estimation of initial state is not easy, the result is sensitive to the parameter ($\sigma$), and the necessity of high precision data. 

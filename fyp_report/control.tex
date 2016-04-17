@@ -3,7 +3,7 @@
 Since estimation algorithm has been created, force control of the arm for assembly tasks can be performed now. Instead of using F/T sensor to control the contact force, motor torques are used to control the contact force through the model. However, readings of F/T sensor are still captured to know the performance of the estimated model.
 
 \section{Controller}
-There are two controller that are used during this project to control the robot, they are force controller and position controller. Both controllers are PD controller with adjustable gain of P and D element.
+There are two controllers that are used during this project to control the robot, they are force controller and position controller. Both controllers are PD controller with adjustable gain of P and D elements.
 
 \subsection{Force Controller}
 
@@ -11,7 +11,7 @@ force controller is a controller that use force as the input and feedback to dri
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 0.6\textwidth ]{high_tor_val}
+    \includegraphics[width = 0.7\textwidth ]{force_controller}
     \caption{Force controller using motor torques and joint velocities}
     \label{fig: Force controller}
 \end{figure}
@@ -23,7 +23,7 @@ Position controller is a controller that use position as the input and feedback 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 0.6\textwidth ]{high_tor_val}
+    \includegraphics[width = 0.7\textwidth ]{position_controller}
     \caption{Position controller}
     \label{fig: Position controller}
 \end{figure}
@@ -82,9 +82,9 @@ The result of using the motor torques to estimate the end-effector force can be 
   \label{fig:contact detection}
 \end{figure}
 
-In contrast, force estimation in z direction is much better than the other two axis. While the average of $F_{z}$ is not zero, it is still below the threshold. There is also a clear difference in $F_{z}$ value where it easily exceed the threshold when a contact is happening. Furthermore, The value is comparable with the F/T sensor data when there is a contact. Hence, it is seen that using the estimation algorithm, contact detection can still be performed without F/T sensor.
+In contrast, force estimation in z direction is much better than the other two axis. While the average of $F_{z}$ is not zero, it is still below the threshold. There is also a clear difference in $F_{z}$ value where it easily exceed the threshold when a contact is happening. Furthermore, The value is comparable with the F/T sensor data when there is a contact (error = 32.56$\%$). Hence, it is seen that using the estimation algorithm, contact detection can still be performed without F/T sensor.
 
-One hypotesis on why it gives reasonable result only for z-axis is because the end-effector is only moving in z-axis and thus, it gives good estimation only on this axis. The implication of this is that the estimation in the other direction will be not good enough as what is seen in \fref{fig:contact detection}. This point will be investigated further in the next discussions. 
+%~ One hypotesis on why it gives reasonable result only for z-axis is because the end-effector is only moving in z-axis and thus, it gives good estimation only on this axis. The implication of this is that the estimation in the other direction will be not good enough as what is seen in \fref{fig:contact detection}. This point will be investigated further in the next discussions. 
 
 \subsection{Force Control in Hyrbrid Controller for Hole Detection}
 
@@ -93,17 +93,17 @@ The force data for all axis during this process are shown in \fref{fig:force con
 \begin{figure}[h]
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{contact_detection_x} 
+    \includegraphics[width = \textwidth ]{force_control_hole_x} 
     \caption{Force -x}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{contact_detection_y}
+    \includegraphics[width = \textwidth ]{force_control_hole_y}
     \caption{Force -y}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{contact_detection_z}
+    \includegraphics[width = \textwidth ]{force_control_hole_z}
     \caption{Force -z}
   \end{subfigure}  
   \caption{Force for all axis during hole detection. (- - : estimated output, -- : F/T sensor output)}
@@ -112,7 +112,7 @@ The force data for all axis during this process are shown in \fref{fig:force con
 
 During the early stage of the searching, the force control in z-axis is unstable. This is due to the fast change in the joint velocities during the early spiral movement where the circle line is near zero. However after several seconds the force become more stable and oscillate in around reference value which is 15 N. 
 
-Comparison with the F/T sensor shows that the result from the model tend to underestimate the force and hence, leading to the actual force greater than computed. The F/T sensor have an average value of ... N (thus ....$%$ error) during the force control. While this performance is not wanted, this is better than overestimating the force. Since in this case it will be guaranted that the actual contact will have to happen first before the robot know about the contact. Thus, in this case the contact with the surface plane is still occuring during the hole searching.  
+Comparison with the F/T sensor shows that the result from the model tend to underestimate the force and hence, leading to the actual force greater than computed. The F/T sensor have an average value of -31.15 N (52.45 $\%$ error) during the force control. While this performance is not wanted, this is better than overestimating the force. Since in this case it will be guaranted that the actual contact will have to happen first before the robot know about the contact. Thus, in this case the contact with the surface plane is still occuring during the hole searching.  
 
 \subsection{Force Control in Hyrbrid Controller for Pin Insertion}
 
@@ -121,17 +121,17 @@ The force data for all axis during this final step are shown in \fref{fig:force 
 \begin{figure}[h]
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{contact_detection_x} 
+    \includegraphics[width = \textwidth ]{force_control_insertion_x} 
     \caption{Force -x}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{contact_detection_y}
+    \includegraphics[width = \textwidth ]{force_control_insertion_y}
     \caption{Force -y}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{contact_detection_z}
+    \includegraphics[width = \textwidth ]{force_control_insertion_z}
     \caption{Force -z}
   \end{subfigure}  
   \caption{Force for all axis during pin insertion. (- - : estimated output, -- : F/T sensor output)}

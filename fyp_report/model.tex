@@ -9,7 +9,7 @@ The basic dynamic equation of a six degrees of freedom (6-DOF) robotic arm is de
 \end{equation}
 
 Where $\tau_{mot}$ is the motor torque, $\tau_{ext}$ is the external torques applied to the respective joint where in this project is due to end-effector force / torque, and $\tau_{friction}$ is the torque because of joint friction. $M\left(q\right)$ defines the inertia matrix, $
-C\left(\dot{q} , q \right)$ defines the coriolis matrix, and $G\left(q \right)$ is the joint torque resulting from gravity. In other words, for each of joint, the summation of external joint torques ($\tau_{mot} + \tau_{ext}$) are equal to the torques needed to overcome the friction and to perform the dynamic motion. Initially the motor torque will be calculated from motor currents by using the relation:
+C\left(\dot{q} , q \right)$ defines the coriolis matrix, and $G\left(q \right)$ is the joint torque resulting from gravity. The combination of these three terms can be called as dynamic torque ($\tau_{dyn}$). In other words, for each of joint, the summation of external joint torques ($\tau_{mot} + \tau_{ext}$) are equal to the torques needed to overcome the friction and to perform the dynamic motion. Initially the motor torque will be calculated from motor currents by using the relation:
 
 \begin{equation}
   \tau_{mot} &= K_{m} I_{mot}

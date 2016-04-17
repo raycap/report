@@ -73,17 +73,17 @@ The results could be seen in \fref{fig:force validation 2} for all types of cont
 \begin{figure}[H]
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{fig16} 
+    \includegraphics[width = \textwidth ]{Static_contact_force} 
     \caption{Static contact force}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{fig17}
+    \includegraphics[width = \textwidth ]{Sinusoidal_contact_force}
     \caption{Sinusoidal contact force}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = \textwidth ]{fig17}
+    \includegraphics[width = \textwidth ]{Step_contact_force}
     \caption{Step function contact force}
   \end{subfigure}
   \caption{Verification of developed model for various contact type(- - : estimated output, -- : real output)}
@@ -96,17 +96,17 @@ The results could be seen in \fref{fig:force validation 2} for all types of cont
     \hline
     \multicolumn{4}{|c|}{Root Mean Square of Various Contact Type} \\\hline
               & static (\%) & sinusoidal (\%)  & step (\%)    \\ \hline
-    Force x   & 26.744215   &  11.800553       &  6.092769    \\ \hline
-    Force y   & 13.456419   &  79.020539       &  60.123212   \\ \hline
-    Force z   & 18.861452   &  56.188314       &  29.462614   \\ \hline
-    Torque x  & 47.856514   &  258.685240      &  138.794379  \\ \hline
-    Torque y  & 87.817204   &  518.882265      &  265.491042  \\ \hline
-    Torque z  & 129.680860  &  87.633992       &  44.686174   \\ \hline
+    Force x   &  46.201581  &  7.035855       & 6.812475    \\ \hline
+    Force y   &  45.474764  &    79.921285     & 61.432838   \\ \hline
+    Force z   &  26.483134  &   33.682928      & 29.129328   \\ \hline
+    Torque x  &  146.662725  &  247.210383     & 136.615923  \\ \hline
+    Torque y  &  186.067329  &   683.422297     & 532.088055 \\ \hline
+    Torque z  &  408.659309  &  90.338212      & 51.192202 \\ \hline
     \end{tabular}
     \caption{Root mean square value for all types of contact}
     \label{table:rmse 2}
 \end{table}
 
-From the root mean square value, the estimation gives horrible results for some of the axis. There are two possible explanations for this: 1) The range of external force/torque introduced is small and 2) The effect of the deadzone. For example, torque z in static contact force has a large error that possibly due to the large deadzone of the sixth joint (see \fref{fig:denso gain sixth joint}). On the other hand, torque x and y have a bad estimation during the sinusoidal and step contact force since for this experiment only external force x and z are introduced, thus making the range value is small. In contrast, the model can give a much better estimation for axis with large range of external torque/force. For instance, force x during sinusoidal and step motion has a good estimation of the force. 
+From the root mean square value, the estimation gives horrible results for some of the axes. There are  possible explanations for this: 1) The range of external force/torque introduced is small 2) Poor denso gain identification due to the effect of the deadzone and 3) Poor friction identification. For example, torque z in static contact force has a large error that possibly due to the large deadzone of the sixth joint (see \fref{fig:denso gain sixth joint}). On the other hand, torque x and y have a bad estimation during the sinusoidal and step contact force since for this experiment only external force x and z are introduced, thus making the range value is small. In contrast, the model can give a much better estimation for axis with large range of external torque/force. For instance, force x during sinusoidal and step motion has a good estimation of the force. 
 
-Hence, it can be concluded that the model will work better when contact force/torque is large and it will perform poorly for small contact force. 
+Hence, it can be concluded that the model will work better when contact force/torque is large and it will perform poorly for small or no contact force. 
